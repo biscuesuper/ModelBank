@@ -1,0 +1,28 @@
+USE [ASPSP]
+GO
+
+/****** Object:  Table [dbo].[Account]    Script Date: 27/12/2021 12:00:41 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Txn](
+	[Id] [int] NOT NULL,
+	[AccountId] [int] NOT NULL,
+	[Amount] [decimal](18, 0) NOT NULL,
+	[Date] [datetime] NOT NULL,
+ CONSTRAINT [PK_Txn_Id] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Txn]  WITH CHECK ADD  CONSTRAINT [FK_Txn_AccountId] FOREIGN KEY([AccountId])
+REFERENCES [dbo].[Account] ([Id])
+GO
+
+
+
