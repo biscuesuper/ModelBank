@@ -1,9 +1,15 @@
-﻿namespace ModelBank.Objects
+﻿using System.Runtime.Serialization;
+
+namespace ModelBank.Objects
 {
+    [DataContract]
     public class User
     {
-        public int Id;
-        public string? Name;
+        [DataMember]
+        public int Id { get; set; }
+
+        [DataMember]
+        public string? Name { get; set; }
 
         public User(int id, string name)
         {

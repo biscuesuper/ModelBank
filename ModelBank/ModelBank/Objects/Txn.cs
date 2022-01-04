@@ -1,11 +1,21 @@
-﻿namespace ModelBank.Objects
+﻿using System.Runtime.Serialization;
+
+namespace ModelBank.Objects
 {
+    [DataContract]
     public class Txn
     {
-        public int Id;
-        public int AccountId;
-        public decimal Amount;
-        public DateTime Date;
+        [DataMember]
+        public int Id { get; set; }
+
+        [DataMember]
+        public int AccountId { get; set; }
+
+        [DataMember]
+        public decimal Amount { get; set; }
+
+        [DataMember]
+        public DateTime Date { get; set; }
 
         public Txn(int id, int accountId, decimal amount, DateTime date)
         {

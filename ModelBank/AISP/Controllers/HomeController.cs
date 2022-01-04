@@ -17,6 +17,8 @@ namespace AISP.Controllers
 
         private static HttpClient _client = new HttpClient();
 
+        private int testAccId = 1;
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -45,8 +47,13 @@ namespace AISP.Controllers
         public IActionResult GetAccount()
         {
             _resultsView = "one account";
-            int id = 1;
-            HttpResponseMessage response = _client.GetAsync(url + $"/{id}").Result;
+            HttpResponseMessage response = _client.GetAsync(url + $"/{testAccId}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var a = response.Content.ReadAsAsync<Account>().Result;
+                //_resultsView = a.ToString();
+                _resultsView = JsonConvert.SerializeObject(a);
+            }
             return Index();
         }
 
@@ -67,12 +74,26 @@ namespace AISP.Controllers
         public IActionResult GetAccountBalance()
         {
             _resultsView = "one account bal";
+            HttpResponseMessage response = _client.GetAsync(url + $"/{testAccId}/balance").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var a = response.Content.ReadAsAsync<decimal>().Result;
+                //_resultsView = a.ToString();
+                _resultsView = a.ToString();
+            }
             return Index();
         }
 
         public IActionResult GetAccountTxns()
         {
             _resultsView = "one account txns";
+            HttpResponseMessage response = _client.GetAsync(url + $"/{testAccId}/transactions").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var a = response.Content.ReadAsAsync<List<Txn>>().Result;
+                //_resultsView = a.ToString();
+                _resultsView = JsonConvert.SerializeObject(a);
+            }
             return Index();
         }
     }

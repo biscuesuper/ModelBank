@@ -30,28 +30,28 @@ namespace ModelBank.Controllers
         }
 
 
-        [HttpGet("{id}", Name = "GetAccount")]
+        [HttpGet("{id:int}", Name = "GetAccount")]
         public Account? GetAccount([FromRoute] int id)
         {
-            var res = Db.GetAccountAsync(id).Result;
+            var res = Db.GetAccountAsync((int)id).Result;
             var acc = res;
             _logger.Log(LogLevel.Information, $"{acc.Id}, {acc.UserId}, {acc.Balance}");
             return res;
         }
 
-        [HttpGet("{id}/balance", Name = "GetAccountBalance")]
+        [HttpGet("{id:int}/balance", Name = "GetAccountBalance")]
         public decimal? GetAccountBalance([FromRoute] int id)
         {
-            var res = Db.GetAccountAsync(id).Result;
+            var res = Db.GetAccountAsync((int)id).Result;
             var acc = res;
             _logger.Log(LogLevel.Information, $"{acc.Id}, {acc.UserId}, {acc.Balance}");
             return res.Balance;
         }
 
-        [HttpGet("{id}/transactions", Name = "GetAccountTxns")]
+        [HttpGet("{id:int}/transactions", Name = "GetAccountTxns")]
         public IEnumerable<Txn>? GetAccountTxns([FromRoute] int id)
         {
-            var res = Db.GetAccountTxns(id).Result;
+            var res = Db.GetAccountTxns((int)id).Result;
             var txn = res.FirstOrDefault();
             _logger.Log(LogLevel.Information, $"{txn.Id}, {txn.AccountId}, {txn.Amount}, {txn.Date}");
             return res;

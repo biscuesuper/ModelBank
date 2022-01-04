@@ -19,7 +19,7 @@ GO
 -- Description:	<Description,,>
 -- =============================================
 CREATE PROCEDURE [dbo].[GetAccount]
-	@AccountId INT
+	@Id INT
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -28,6 +28,6 @@ BEGIN
 
 	SELECT [Id], [UserId], [Balance]
 	FROM [dbo].[Account]
-	WHERE [Id] = @AccountId
+	WHERE [Id] = @Id
 END
 GO

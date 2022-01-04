@@ -94,7 +94,7 @@ namespace ModelBank.Library
                             Txn txn = new Txn();
                             txn.Id = Convert.ToInt32(dr["Id"].ToString());
                             txn.AccountId = Convert.ToInt32(dr["AccountId"].ToString());
-                            txn.Amount = Convert.ToDecimal(dr["Anount"].ToString());
+                            txn.Amount = Convert.ToDecimal(dr["Amount"].ToString());
                             txn.Date = Convert.ToDateTime(dr["Date"].ToString());
                             txns.Add(txn);
                         }
