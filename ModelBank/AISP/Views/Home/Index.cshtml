@@ -5,4 +5,18 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+   
+</div>
+
+<div class="text-left">
+    <ul>
+        <li><a asp-area="" asp-controller="Home" asp-action="GetAccount">Get Account</a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="GetAccounts">Get Accounts</a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="">Get Account Balance</a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="GetAccountTxns">Get Account Txns</a></li>
+    </ul>
+
+    <div id="ResultsView" style="height:200px; width:200px; background-color:orange; overflow-x:scroll; overflow-y:scroll">
+        <p>@ViewData["ResultsView"]</p>
+    </div>
 </div>

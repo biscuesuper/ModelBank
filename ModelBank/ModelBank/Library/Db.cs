@@ -75,5 +75,41 @@ namespace ModelBank.Library
                 throw new Exception("No data " + e.Message);
             }
         }
+
+        public async static Task<IEnumerable<Txn>?> GetAccountTxns(int accountId)
+        {
+            try
+            {
+                List<Txn> txns = new List<Txn>();
+                using (var conn = new SqlConnection(connStr))
+                using (var cmd = new SqlCommand("[dbo].[GetAccountTxns]", conn) { CommandType = CommandType.StoredProcedure })
+                {
+                    cmd.Parameters.Add(new SqlParameter("@AccountId", accountId));
+                    conn.Open();
+                    SqlDataReader dr = await cmd.ExecuteReaderAsync();
+                    if (dr != null && dr.HasRows)
+                    {
+                        while (await dr.ReadAsync())
+                        {
+                            Txn txn = new Txn();
+                            txn.Id = Convert.ToInt32(dr["Id"].ToString());
+                            txn.AccountId = Convert.ToInt32(dr["AccountId"].ToString());
+                            txn.Amount = Convert.ToDecimal(dr["Anount"].ToString());
+                            txn.Date = Convert.ToDateTime(dr["Date"].ToString());
+                            txns.Add(txn);
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("No data.");
+                    }
+                }
+                return txns.ToArray();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No data " + e.Message);
+            }
+        }
     }
 }

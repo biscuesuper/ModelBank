@@ -1,10 +1,18 @@
-﻿namespace ModelBank.Objects
+﻿using System.Runtime.Serialization;
+
+namespace ModelBank.Objects
 {
+    [DataContract]
     public class Account
     {
-        public int Id;
-        public int UserId;
-        public decimal Balance;
+        [DataMember]
+        public int Id { get; set; }
+
+        [DataMember]
+        public int UserId { get; set; }
+
+        [DataMember]
+        public decimal Balance { get; set; }
 
         public Account(int id, int userId, decimal balance)
         {
