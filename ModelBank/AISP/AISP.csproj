@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ModelBank\ModelBank.csproj" />
+    <ProjectReference Include="..\ModelBank\ModelBank.Resources.csproj" />
   </ItemGroup>
 
 </Project>
