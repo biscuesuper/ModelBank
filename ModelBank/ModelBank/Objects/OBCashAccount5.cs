@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using ModelBank.Resources.Enums;
+using System.Runtime.Serialization;
 
 namespace ModelBank.Resources.Objects
 {
