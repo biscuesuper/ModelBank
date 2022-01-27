@@ -1,0 +1,1 @@
+﻿https://openbankinguk.github.io/read-write-api-site3/v3.1.9/references/namespaced-enumerations.html
