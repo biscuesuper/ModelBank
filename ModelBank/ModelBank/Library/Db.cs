@@ -42,7 +42,14 @@ namespace ModelBank.Library
             }
         }
 
-        public async static Task<List<Account>?> GetAccountsAsync()
+        internal async static Task<decimal?> GetAccountBalancesAsync(int id)
+        {
+            var res = Db.GetAccountAsync((int)id).Result;
+            var acc = res;
+            return res.Balance;
+        }
+
+        public async static Task<IEnumerable<Account>?> GetAccountsAsync()
         {
             try
             {
@@ -76,7 +83,7 @@ namespace ModelBank.Library
             }
         }
 
-        public async static Task<IEnumerable<Txn>?> GetAccountTxns(int accountId)
+        public async static Task<IEnumerable<Txn>?> GetAccountTxnsAsync(int accountId)
         {
             try
             {

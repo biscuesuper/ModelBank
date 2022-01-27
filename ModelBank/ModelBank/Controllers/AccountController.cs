@@ -7,7 +7,7 @@ namespace ModelBank.Controllers
     [ApiController]
     // [participant-path-prefix]/open-banking/[version]/[resource-group]/[resource]/[resource-id]/[sub-resource]
     // https://superbank.com/apis/open-banking/v3.1/aisp/accounts/1234/transactions
-    [Route("/open-banking/v1/aisp/[controller]")] //[Route("[controller]")]
+    [Route("/open-banking/v1/aisp/accounts")] //[Route("[controller]")]
     public class AccountController : Controller
     {
         private readonly ILogger<WeatherForecastController> _logger;
@@ -18,48 +18,34 @@ namespace ModelBank.Controllers
         }
 
         [HttpGet(Name = "GetAccounts")]
-        public IEnumerable<Account>? GetAccounts()
+        public Task<IEnumerable<Account>?> GetAccounts([FromHeader(Name = "Authorization")] string auth)
         {
-            var res = Db.GetAccountsAsync().Result;
-            if (res != null)
-            {
-                var acc = res.FirstOrDefault();
-                _logger.Log(LogLevel.Information, $"{acc.Id.ToString()}, {acc.UserId.ToString()}, {acc.Balance.ToString()}");
-            }
-            return res.ToArray();
+            _logger.Log(LogLevel.Information, $"/");
+            return Db.GetAccountsAsync();
         }
 
 
-        [HttpGet("{id:int}", Name = "GetAccount")]
-        public Account? GetAccount([FromRoute] int id)
+        [HttpGet("{AccountId:int}", Name = "GetAccount")]
+        public Task<Account?> GetAccount([FromHeader(Name = "Authorization")] string auth, [FromRoute] int AccountId)
         {
-            var res = Db.GetAccountAsync((int)id).Result;
-            var acc = res;
-            _logger.Log(LogLevel.Information, $"{acc.Id}, {acc.UserId}, {acc.Balance}");
-            return res;
+            _logger.Log(LogLevel.Information, $"/{AccountId}");
+            return Db.GetAccountAsync(AccountId);
         }
 
-        [HttpGet("{id:int}/balance", Name = "GetAccountBalance")]
-        public decimal? GetAccountBalance([FromRoute] int id)
+        [HttpGet("{AccountId:int}/balances", Name = "GetAccountBalances")]
+        public Task<decimal?> GetAccountBalances([FromHeader(Name = "Authorization")] string auth, [FromRoute] int AccountId)
         {
-            var res = Db.GetAccountAsync((int)id).Result;
-            var acc = res;
-            _logger.Log(LogLevel.Information, $"{acc.Id}, {acc.UserId}, {acc.Balance}");
-            return res.Balance;
+            _logger.Log(LogLevel.Information, $"/{AccountId}/balances");
+            return Db.GetAccountBalancesAsync(AccountId);
         }
 
-        [HttpGet("{id:int}/transactions", Name = "GetAccountTxns")]
-        public IEnumerable<Txn>? GetAccountTxns([FromRoute] int id)
+        [HttpGet("{AccountId:int}/transactions", Name = "GetAccountTxns")]
+        public Task<IEnumerable<Txn>?> GetAccountTxns([FromHeader(Name = "Authorization")] string auth, [FromRoute] int AccountId)
         {
-            var res = Db.GetAccountTxns((int)id).Result;
-            var txn = res.FirstOrDefault();
-            _logger.Log(LogLevel.Information, $"{txn.Id}, {txn.AccountId}, {txn.Amount}, {txn.Date}");
-            return res;
+            _logger.Log(LogLevel.Information, $"/{AccountId}/transactions");
+            return Db.GetAccountTxnsAsync(AccountId);
+           
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
     }
 }
