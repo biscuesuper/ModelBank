@@ -6,6 +6,6 @@ namespace ModelBank.Resources.Objects
     public class OBReadAccount6
     {
         [DataMember]
-        public OBReadDataAccount5 Data = new OBReadDataAccount5();
+        public OBReadDataAccount5 Data;
     }
 }
