@@ -1,34 +1,5 @@
 ﻿namespace ModelBank.Resources.Objects
 {
-    public enum OBAccountStatus1Code
-    {
-        /// <summary>
-        /// Account can be used for its intended purpose.
-        /// </summary>
-        Enabled,
-
-        /// <summary>
-        /// Account cannot be used for its intended purpose, either temporarily or permanently.
-        /// </summary>
-        Disabled,
-
-        /// <summary>
-        /// Account cannot be used any longer.
-        /// </summary>
-        Deleted,
-
-        /// <summary>
-        /// Account is temporary and can be partially used for its intended purpose.The account will be fully available for use 
-        /// when the account servicer has received all relevant documents.
-        /// </summary>
-        ProForma,
-
-        /// <summary>
-        /// Account change is pending approval.
-        /// </summary>
-        Pending
-    }
-
     public enum OBAddressTypeCode
     {
         /// <summary>
@@ -69,7 +40,7 @@
         /// <summary>
         /// Address is the address where statements are sent.
         /// </summary>
-        Statement   
+        Statement
     }
 
     public enum OBBalanceType1Code
@@ -146,7 +117,6 @@
         PreviouslyClosedBooked
     }
 
-
     public enum OBCreditDebitCode
     {
         /// <summary>
@@ -180,63 +150,6 @@
         /// Transaction has been rejected. Typically used for indicating card transactions that have been rejected.
         /// </summary>
         Rejected
-    }
-
-
-    public enum OBExternalAccountSubType1Code 
-    {
-        /// <summary>
-        /// Account sub-type is a Charge Card.
-        /// </summary>
-        ChargeCard,
-
-        /// <summary>
-        /// Account sub-type is a Credit Card.
-        /// </summary>
-        CreditCard,
-
-        /// <summary>
-        /// Account sub-type is a Current Account.
-        /// </summary>
-        CurrentAccount,
-
-        /// <summary>
-        /// Account sub-type is an EMoney.
-        /// </summary>
-        EMoney,
-
-        /// <summary>
-        /// Account sub-type is a Loan.
-        /// </summary>
-        Loan,
-
-        /// <summary>
-        /// Account sub-type is a Mortgage.
-        /// </summary>
-        Mortgage,
-
-        /// <summary>
-        /// Account sub-type is a PrePaid Card.
-        /// </summary>
-        PrePaidCard,
-
-        /// <summary>
-        /// Account sub-type is a Savings.
-        /// </summary>
-        Savings
-    }
-
-    public enum OBExternalAccountType1Code 
-    {
-        /// <summary>
-        /// Account type is for business.
-        /// </summary>
-        Business,
-
-        /// <summary>
-        /// Account type is for personal.
-        /// </summary>
-        Personal
     }
 
     public enum OBExternalCardAuthorisationType1Code
