@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ModelBank.Resources.Objects
+namespace ModelBank.Resources.Enums
 {
     public enum OBExternalSwitchStatusCode
     {

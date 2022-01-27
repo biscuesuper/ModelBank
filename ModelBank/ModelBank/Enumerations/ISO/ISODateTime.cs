@@ -1,4 +1,4 @@
-﻿namespace ModelBank.Resources.Objects
+﻿namespace ModelBank.Resources.Enums
 {
     public class ISODateTime
     {
