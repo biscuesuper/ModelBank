@@ -10,7 +10,7 @@ namespace ModelBank.Resources.Objects
         /// Amount of money of the credit line.
         /// </summary>
         [DataMember]
-        public IEnumerable<OBActiveOrHistoricCurrencyAndAmount> Amount = new List<OBActiveOrHistoricCurrencyAndAmount>();
+        public OBActiveOrHistoricCurrencyAndAmount? Amount;
 
         /// <summary>
         /// Indicates whether or not the credit line is included in the balance of the account. 
