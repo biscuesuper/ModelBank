@@ -9,6 +9,12 @@ namespace ModelBank.Resources.Enums
     public class ActiveOrHistoricCurrencyCode
     {
         readonly string _value;
+
+        public ActiveOrHistoricCurrencyCode()
+        {
+            _value = "";
+        }
+
         public ActiveOrHistoricCurrencyCode(string value)
         {
             if (!Regex.IsMatch(value, @"^[A-Z]{3,3}$")) throw new InvalidCastException("ActiveOrHistoricCurrencyCode does not match the required pattern.");

@@ -5,6 +5,7 @@ using System.Net;
 using ModelBank.Objects;
 using Newtonsoft.Json;
 using ModelBank.Resources.Objects;
+using ModelBank.Resources.Tests;
 
 namespace AISP.Controllers
 {
@@ -27,6 +28,7 @@ namespace AISP.Controllers
 
         public IActionResult Index()
         {
+            Serialisation.ReadXML();
             if (!string.IsNullOrEmpty(_resultsView))
             {
                 ViewData["ResultsView"] = _resultsView;
