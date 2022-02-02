@@ -2,5 +2,8 @@
 {
     public class Max35Text : MaxText
     {
+        public Max35Text(string value) : base(value)
+        {
+        }
     }
 }
