@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Data;
+using System.Runtime.Serialization;
 using ModelBank.Resources.Enums;
 
 namespace ModelBank.Resources.Objects
@@ -15,32 +16,32 @@ namespace ModelBank.Resources.Objects
         /// Provides the details to identify an account.
         /// </summary>
         [DataMember]
-        IEnumerable<OBCashAccount5> Account = new List<OBCashAccount5>();
+        public ICollection<OBCashAccount5> Account { get; set; }
 
         /// <summary>
         /// Party that manages the account on behalf of the account owner, that is manages the registration and booking of 
         /// entries on the account, calculates balances on the account and provides information about the account.
         /// </summary>
         [DataMember]
-        public OBBranchAndFinancialInstitutionIdentification5? Servicer;
+        public OBBranchAndFinancialInstitutionIdentification5? Servicer { get; set; }
 
         /// <summary>
         /// A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
         /// </summary>
         [DataMember]
-        public string AccountId;
+        public string AccountId { get; set; }
 
         /// <summary>
         /// Specifies the sub type of account (product family group).
         /// </summary>
         [DataMember]
-        public OBExternalAccountSubType1Code? AccountSubType;
+        public OBExternalAccountSubType1Code? AccountSubType { get; set; }
 
         /// <summary>
         /// Specifies the type of account (personal or business).
         /// </summary>
         [DataMember]
-        public OBExternalAccountType1Code? AccountType;
+        public OBExternalAccountType1Code? AccountType { get; set; }
 
         /// <summary>
         /// Identification of the currency in which the account is held. 
@@ -48,49 +49,49 @@ namespace ModelBank.Resources.Objects
         /// needs to identify which currency needs to be used for settlement on the account.
         /// </summary>
         [DataMember]
-        public ActiveOrHistoricCurrencyCode? Currency;
+        public ActiveOrHistoricCurrencyCode? Currency { get; set; }
 
         /// <summary>
         /// Specifies the description of the account type.
         /// </summary>
         [DataMember]
-        public string? Description; //why is this only 35?
+        public string? Description { get; set; } //why is this only 35?
 
         /// <summary>
         /// Maturity date for the account.
         /// </summary>
         [DataMember]
-        public ISODate? MaturityDate;
+        public ISODate? MaturityDate { get; set; }
 
         /// <summary>
         /// The nickname of the account, assigned by the account owner in order to provide an additional means of identification of the account.
         /// </summary>
         [DataMember]
-        public string? Nickname;
+        public string? Nickname { get; set; }
 
         /// <summary>
         /// Date on which the account and related basic services are effectively operational for the account owner.
         /// </summary>
         [DataMember]
-        public ISODate? OpeningDate;
+        public ISODate? OpeningDate { get; set; }
 
         /// <summary>
         /// Specifies the status of account resource in code form.
         /// </summary>
         [DataMember]
-        public OBAccountStatus1Code Status;
+        public OBAccountStatus1Code Status { get; set; }
 
         /// <summary>
         /// Date and time at which the resource status was updated.
         /// </summary>
         [DataMember]
-        public ISODateTime? StatusUpdateDateTime;
+        public ISODateTime? StatusUpdateDateTime { get; set; }
 
         /// <summary>
         /// The switch status for the account.
         /// </summary>
         [DataMember]
-        public OBExternalSwitchStatusCode? SwitchStatus;
+        public OBExternalSwitchStatusCode? SwitchStatus { get; set; }
 
     }
 }

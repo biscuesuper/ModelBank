@@ -28,7 +28,6 @@ namespace AISP.Controllers
 
         public IActionResult Index()
         {
-            Serialisation.ReadXML();
             if (!string.IsNullOrEmpty(_resultsView))
             {
                 ViewData["ResultsView"] = _resultsView;

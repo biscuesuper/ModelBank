@@ -11,6 +11,6 @@ namespace ModelBank.Resources.Objects
         }
 
         [DataMember]
-        public OBReadDataAccount5 Data;
+        public OBReadDataAccount5 Data { get; set; }
     }
 }

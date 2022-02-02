@@ -14,6 +14,6 @@ namespace ModelBank.Resources.Objects
         /// Unambiguous identification of the account to which credit and debit entries are made.	
         /// </summary>
         [DataMember]
-        public IEnumerable<OBAccount6> Account = new List<OBAccount6>();
+        public ICollection<OBAccount6> Account { get; set; } = new List<OBAccount6>();
     }
 }

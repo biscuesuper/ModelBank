@@ -1,5 +1,6 @@
 ﻿using ModelBank.Objects;
 using ModelBank.Resources.Objects;
+using ModelBank.Resources.Enums;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -8,34 +9,14 @@ namespace ModelBank.Library
     public static class Db
     {
         private static string connStr = "Server=localhost;Database=ASPSP;Trusted_Connection=True;";
-        public async static Task<Account?> GetAccountAsync(int id)
+        public static OBReadAccount6 GetAccountAsync(int id)
         {
             try
             {
-                List<Account> accounts = new List<Account>();
-                using (var conn = new SqlConnection(connStr))
-                using (var cmd = new SqlCommand("[dbo].[GetAccount]", conn) { CommandType = CommandType.StoredProcedure })
-                {
-                    cmd.Parameters.Add(new SqlParameter("@Id", id));
-                    conn.Open();
-                    SqlDataReader dr = await cmd.ExecuteReaderAsync();
-                    if (dr != null && dr.HasRows)
-                    {
-                        while (await dr.ReadAsync())
-                        {
-                            Account account = new Account();
-                            account.Id = Convert.ToInt32(dr["Id"].ToString());
-                            account.UserId = Convert.ToInt32(dr["UserId"].ToString());
-                            account.Balance = Convert.ToDecimal(dr["Balance"].ToString());
-                            accounts.Add(account);
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("No data.");
-                    }
-                }
-                return accounts.FirstOrDefault();
+                var account = GetDbAccountAsync(id);
+                var data = new OBReadDataAccount5();
+                data.Account.Add(account);
+                return new OBReadAccount6() { Data = data };
             }
             catch (Exception e)
             {
@@ -43,12 +24,82 @@ namespace ModelBank.Library
             }
         }
 
-        internal async static Task<decimal?> GetAccountBalancesAsync(int id)
+        private static OBAccount6 GetDbAccountAsync(int id)
         {
-            var res = Db.GetAccountAsync((int)id).Result;
-            var acc = res;
-            return res.Balance;
+            var res = new OBAccount6();
+
+            DataTable dt = new DataTable();
+            using (var con = new SqlConnection(connStr))
+            using (var cmd = new SqlCommand(" SELECT *" +
+                                            " FROM [dbo].[OBAccount6] " +
+                                            " WHERE [AccountId] = @id",
+                                            con))
+            {
+                cmd.Parameters.Add(new SqlParameter("@id", id));
+                
+                con.Open();
+                dt.Load(cmd.ExecuteReader());
+
+                if (dt.Rows.Count > 0 && !dt.Rows[0].IsNull(0))
+                {
+                    var row = dt.Rows[0];
+                    if(row["AccountId"] != null) res.AccountId = (string)row["AccountId"];
+                    if (row["AccountSubType"] != null) res.AccountSubType = Enum.Parse<OBExternalAccountSubType1Code>(row["AccountSubType"].ToString());
+                    if (row["AccountType"] != null) res.AccountType = Enum.Parse<OBExternalAccountType1Code>(row["AccountType"].ToString());
+                    if (row["Currency"] != null) res.Currency = row["Currency"].ToString();
+                    if (row["Description"] != null) res.Description = row["Description"].ToString();
+                    if (row["MaturityDate"] != null) res.MaturityDate = row["MaturityDate"].ToString();
+                    if (row["Nickname"] != null) res.Nickname = row["Nickname"].ToString();
+                    if (row["OpeningDate"] != null) res.OpeningDate = row["OpeningDate"].ToString();
+                    if (row["Status"] != null) res.Status = Enum.Parse<OBAccountStatus1Code>(row["Status"].ToString());
+                    if (row["StatusUpdateDateTime"] != null) res.StatusUpdateDateTime = row["StatusUpdateDateTime"].ToString();
+                    //if (row["SwitchStatus"] != null) res.SwitchStatus = Enum.Parse<OBExternalSwitchStatusCode>(row["SwitchStatus"].ToString());
+                }
+            }
+            var accs = GetDbCashAccountsAsync(id);
+            if (accs.Count() > 0) res.Account = accs;
+            return res;
         }
+
+        private static ICollection<OBCashAccount5> GetDbCashAccountsAsync(int id)
+        {
+            var res = new List<OBCashAccount5>();
+
+            DataTable dt = new DataTable();
+            using (var con = new SqlConnection(connStr))
+            using (var cmd = new SqlCommand(" SELECT *" +
+                                            " FROM [dbo].[OBCashAccount5] " +
+                                            " WHERE [AccountId] = @id",
+                                            con))
+            {
+                cmd.Parameters.Add(new SqlParameter("@id", id));
+
+                con.Open();
+                dt.Load(cmd.ExecuteReader());
+
+                if (dt.Rows.Count > 0 && !dt.Rows[0].IsNull(0))
+                {
+                    for (var index = 0; index < dt.Rows.Count; index++)
+                    {
+                        var row = dt.Rows[index];
+                        var acc = new OBCashAccount5();
+                        if (row["Identification"] != null) acc.Identification = row["Identification"].ToString();
+                        if (row["Name"] != null) acc.Name = row["Name"].ToString();
+                        //if (row["SchemeName"] != null) acc.SchemeName = Enum.Parse<OBExternalAccountIdentification4Code>(row["SchemeName"].ToString());
+                        if (row["SecondaryIdentification"] != null) acc.SecondaryIdentification = row["SecondaryIdentification"].ToString();
+                        res.Add(acc);
+                    }
+                }
+            }
+            return res;
+        }
+
+        //internal async static Task<decimal?> GetAccountBalancesAsync(int id)
+        //{
+        //    var res = Db.GetAccountAsync((int)id).Result;
+        //    var acc = res;
+        //    return res.Balance;
+        //}
 
         public async static Task<OBReadAccount6> GetAccountsAsync()
         {
