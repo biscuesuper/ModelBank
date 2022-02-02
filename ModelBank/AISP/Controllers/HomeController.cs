@@ -6,6 +6,8 @@ using ModelBank.Objects;
 using Newtonsoft.Json;
 using ModelBank.Resources.Objects;
 using ModelBank.Resources.Tests;
+using ModelBank.Library;
+using ModelBank.Resources.Enums;
 
 namespace AISP.Controllers
 {
@@ -15,11 +17,15 @@ namespace AISP.Controllers
 
         private string _resultsView= "";
 
-        private string url = "https://localhost:7259/open-banking/v1/aisp/Account";
+        private string url = "https://localhost:7259/open-banking/v1/aisp/accounts";
+
+        private string urlbase = "https://localhost:7259/open-banking/v1/aisp";
 
         private static HttpClient _client = new HttpClient();
 
         private int testAccId = 1;
+
+        private static OBReadConsentResponse1 _consentResponse;
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -48,11 +54,12 @@ namespace AISP.Controllers
 
         public IActionResult GetAccount()
         {
+           // Db.GetAccountAsync(22289);
             _resultsView = "one account";
-            HttpResponseMessage response = _client.GetAsync(url + $"/{testAccId}").Result;
+            HttpResponseMessage response = _client.GetAsync(url + $"/22289").Result;
             if (response.IsSuccessStatusCode)
             {
-                var a = response.Content.ReadAsAsync<Account>().Result;
+                var a = response.Content.ReadAsAsync<OBReadAccount6>().Result;
                 //_resultsView = a.ToString();
                 _resultsView = JsonConvert.SerializeObject(a);
             }
@@ -65,7 +72,7 @@ namespace AISP.Controllers
             HttpResponseMessage response = _client.GetAsync(url + "/").Result;
             if (response.IsSuccessStatusCode)
             {
-                var a = response.Content.ReadAsAsync<List<Account>>().Result;
+                var a = response.Content.ReadAsAsync<OBReadAccount6>().Result;
                 //_resultsView = a.ToString();
                 _resultsView = JsonConvert.SerializeObject(a);
             }
@@ -80,7 +87,6 @@ namespace AISP.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var a = response.Content.ReadAsAsync<decimal>().Result;
-                //_resultsView = a.ToString();
                 _resultsView = a.ToString();
             }
             return Index();
@@ -96,6 +102,57 @@ namespace AISP.Controllers
                 //_resultsView = a.ToString();
                 _resultsView = JsonConvert.SerializeObject(a);
             }
+            return Index();
+        }
+
+        public IActionResult PostAccessConsents()
+        {
+            _resultsView = "post access token";
+
+            var consent = new OBReadConsent1();
+            consent.Data = new OBReadData1();
+            consent.Data.Permissions = new List<string>();
+            consent.Data.Permissions.Add(OBExternalPermissions1Code.ReadAccountsBasic.ToString());
+            consent.Data.ExpirationDateTime = "2017-05-02T00:00:00+00:00";
+            consent.Data.TransactionFromDateTime = "2017-05-03T00:00:00+00:00";
+            consent.Data.TransactionToDateTime = "2017-12-03T00:00:00+00:00";
+            consent.Risk = new OBRisk2();
+
+            HttpResponseMessage response = _client.PostAsJsonAsync(urlbase + $"/account-access-consents", consent).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var a = response.Content.ReadAsAsync<OBReadConsentResponse1>().Result;
+                //_resultsView = a.ToString();
+                _resultsView = JsonConvert.SerializeObject(a);
+                _consentResponse = a;
+            }
+            return Index();
+        }
+
+        public IActionResult GetAccessConsents()
+        {
+            _resultsView = "get access token";
+            var consentId = _consentResponse.Data.ConsentId;
+
+            HttpResponseMessage response = _client.GetAsync(urlbase + $"/account-access-consents/{consentId}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var a = response.Content.ReadAsAsync<OBReadConsentResponse1>().Result;
+                var status = a.Data.Status;
+                _resultsView = status.ToString();
+                //_resultsView = JsonConvert.SerializeObject(a);
+                _consentResponse = a;
+            }
+            return Index();
+        }
+
+        public IActionResult DeleteAccessConsents()
+        {
+            _resultsView = "delete access token";
+            var consentId = _consentResponse.Data.ConsentId;
+
+            HttpResponseMessage response = _client.DeleteAsync(urlbase + $"/account-access-consents/{consentId}").Result;
+            _resultsView = response.StatusCode.ToString();
             return Index();
         }
     }

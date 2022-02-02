@@ -61,6 +61,34 @@ namespace ModelBank.Library
             return res;
         }
 
+        public static OBReadConsentResponse1 CreateConsentResponse(OBReadConsent1 consent)
+        {
+            var result = new OBReadConsentResponse1(consent);
+            TempCache.Consents.Add(result);
+            return result;
+        }
+
+        public static OBReadConsentResponse1 GetConsentResponse(string id)
+        {
+            var result = TempCache.Consents.Where(x => x.Data.ConsentId == id).Select(x => x).FirstOrDefault();
+            return result;
+        }
+
+        public static void UserConsentResponse(string id)
+        {
+            var result = TempCache.Consents.Where(x => x.Data.ConsentId == id).FirstOrDefault();
+            if (result != null)
+            {
+                result.Data.Status = OBExternalRequestStatus1Code.Authorised;
+                result.Data.StatusUpdateDateTime = DateTime.Now.ToString();
+            }
+        }
+
+        public static void DeleteConsentResponse(string id)
+        {
+            var result = TempCache.Consents.RemoveAll(x => x.Data.ConsentId == id);
+        }
+
         private static ICollection<OBCashAccount5> GetDbCashAccountsAsync(int id)
         {
             var res = new List<OBCashAccount5>();

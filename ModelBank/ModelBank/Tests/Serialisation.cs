@@ -20,7 +20,6 @@ namespace ModelBank.Resources.Tests
             // First write something so that there is something to read ...  
             var b = new OBAccount6 {
                 AccountId = "22289"
-
             };
             var writer = new System.Xml.Serialization.XmlSerializer(typeof(OBAccount6));
             var wfile = new System.IO.StreamWriter(@"c:\temp\SerializationOverview.xml");

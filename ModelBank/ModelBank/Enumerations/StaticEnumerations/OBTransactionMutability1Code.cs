@@ -1,4 +1,4 @@
-﻿namespace ModelBank.Resources.Objects
+﻿namespace ModelBank.Resources.Enums
 {
     /// <summary>
     /// Specifies the Mutability of the Transaction record.

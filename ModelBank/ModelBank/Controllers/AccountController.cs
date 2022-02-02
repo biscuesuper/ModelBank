@@ -18,12 +18,12 @@ namespace ModelBank.Controllers
             _logger = logger;
         }
 
-        //[HttpGet(Name = "GetAccounts")]
-        //public Task<OBReadAccount6> GetAccounts(/*[FromHeader(Name = "Authorization")] string auth*/)
-        //{
-        //    _logger.Log(LogLevel.Information, $"/");
-        //    return Db.GetAccountsAsync();
-        //}
+        [HttpGet(Name = "GetAccounts")]
+        public OBReadAccount6 GetAccounts([FromHeader(Name = "Authorization")] string auth)
+        {
+            _logger.Log(LogLevel.Information, $"/");
+            return new OBReadAccount6();
+        }
 
 
         [HttpGet("{AccountId:int}", Name = "GetAccount")]
@@ -34,20 +34,19 @@ namespace ModelBank.Controllers
             return account;
         }
 
-        //[HttpGet("{AccountId:int}/balances", Name = "GetAccountBalances")]
-        //public Task<decimal?> GetAccountBalances([FromHeader(Name = "Authorization")] string auth, [FromRoute] int AccountId)
-        //{
-        //    _logger.Log(LogLevel.Information, $"/{AccountId}/balances");
-        //    return Db.GetAccountBalancesAsync(AccountId);
-        //}
+        [HttpGet("{AccountId:int}/balances", Name = "GetAccountBalances")]
+        public OBReadBalance1 GetAccountBalances([FromHeader(Name = "Authorization")] string auth, [FromRoute] int AccountId)
+        {
+            _logger.Log(LogLevel.Information, $"/{AccountId}/balances");
+            return new OBReadBalance1();
+        }
 
-        //[HttpGet("{AccountId:int}/transactions", Name = "GetAccountTxns")]
-        //public Task<IEnumerable<Txn>?> GetAccountTxns([FromHeader(Name = "Authorization")] string auth, [FromRoute] int AccountId)
-        //{
-        //    _logger.Log(LogLevel.Information, $"/{AccountId}/transactions");
-        //    return Db.GetAccountTxnsAsync(AccountId);
-           
-        //}
+        [HttpGet("{AccountId:int}/transactions", Name = "GetAccountTxns")]
+        public OBReadTransaction6 GetAccountTxns([FromHeader(Name = "Authorization")] string auth, [FromRoute] int AccountId)
+        {
+            _logger.Log(LogLevel.Information, $"/{AccountId}/transactions");
+            return new OBReadTransaction6();
+        }
 
     }
 }
