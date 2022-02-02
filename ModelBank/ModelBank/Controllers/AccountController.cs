@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ModelBank.Library;
 using ModelBank.Objects;
+using ModelBank.Resources.Objects;
 
 namespace ModelBank.Controllers
 {
@@ -18,7 +19,7 @@ namespace ModelBank.Controllers
         }
 
         [HttpGet(Name = "GetAccounts")]
-        public Task<IEnumerable<Account>?> GetAccounts([FromHeader(Name = "Authorization")] string auth)
+        public Task<OBReadAccount6> GetAccounts([FromHeader(Name = "Authorization")] string auth)
         {
             _logger.Log(LogLevel.Information, $"/");
             return Db.GetAccountsAsync();

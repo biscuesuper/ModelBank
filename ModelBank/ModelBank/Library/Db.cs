@@ -1,4 +1,5 @@
 ﻿using ModelBank.Objects;
+using ModelBank.Resources.Objects;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -49,33 +50,43 @@ namespace ModelBank.Library
             return res.Balance;
         }
 
-        public async static Task<IEnumerable<Account>?> GetAccountsAsync()
+        public async static Task<OBReadAccount6> GetAccountsAsync()
         {
             try
             {
-                List<Account> accounts = new List<Account>();
-                using (var conn = new SqlConnection(connStr))
-                using (var cmd = new SqlCommand("[dbo].[GetAccounts]", conn) { CommandType = CommandType.StoredProcedure })
-                {
-                    conn.Open();
-                    SqlDataReader dr = await cmd.ExecuteReaderAsync();
-                    if (dr != null && dr.HasRows)
-                    {
-                        while (await dr.ReadAsync())
-                        {
-                            Account account = new Account();
-                            account.Id = Convert.ToInt32(dr["Id"].ToString());
-                            account.UserId = Convert.ToInt32(dr["UserId"].ToString());
-                            account.Balance = Convert.ToDecimal(dr["Balance"].ToString());
-                            accounts.Add(account);
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("No data.");
-                    }
-                }
-                return accounts;
+                //List<Account> accounts = new List<Account>();
+                //using (var conn = new SqlConnection(connStr))
+                //using (var cmd = new SqlCommand("[dbo].[GetAccounts]", conn) { CommandType = CommandType.StoredProcedure })
+                //{
+                //    conn.Open();
+                //    SqlDataReader dr = await cmd.ExecuteReaderAsync();
+                //    if (dr != null && dr.HasRows)
+                //    {
+                //        while (await dr.ReadAsync())
+                //        {
+                //            Account account = new Account();
+                //            account.Id = Convert.ToInt32(dr["Id"].ToString());
+                //            account.UserId = Convert.ToInt32(dr["UserId"].ToString());
+                //            account.Balance = Convert.ToDecimal(dr["Balance"].ToString());
+                //            accounts.Add(account);
+                //        }
+                //    }
+                //    else
+                //    {
+                //        throw new Exception("No data.");
+                //    }
+                //}
+                //return accounts;
+                var jsn = "\"Account\": [{ \"AccountId\": \"22289\",\"Status\": \"Enabled\",\"StatusUpdateDateTime\": \"2019-01-01T06:06:06+00:00\", \"Currency\": \"GBP\",  "+
+                " \"AccountType\": \"Personal\", \"AccountSubType\": \"CurrentAccount\",\"Nickname\": \"Bills\",\"Account\": [ { \"SchemeName\": \"UK.OBIE.SortCodeAccountNumber\", " +
+          		" \"Identification\": \"80200110203345\", \"Name\": \"Mr Kevin\", \"SecondaryIdentification\": \"00021\" }] } ] } ";
+
+                var acc = Newtonsoft.Json.JsonConvert.DeserializeObject<OBAccount6>(jsn);
+                var data = new OBReadDataAccount5();
+                data.Account.Append(acc);
+                var res = new OBReadAccount6() { Data = data};
+                return res;
+   
             }
             catch (Exception e)
             {
