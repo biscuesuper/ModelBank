@@ -6,6 +6,11 @@ namespace ModelBank.Resources.Objects
     [DataContract]
     public class OBCreditLine1
     {
+        public OBCreditLine1()
+        {
+
+        }
+
         /// <summary>
         /// Amount of money of the credit line.
         /// </summary>

@@ -6,6 +6,11 @@ namespace ModelBank.Resources.Objects
     [DataContract]
     public class OBAccount6
     {
+        public OBAccount6()
+        {
+
+        }
+
         /// <summary>
         /// Provides the details to identify an account.
         /// </summary>
@@ -23,7 +28,7 @@ namespace ModelBank.Resources.Objects
         /// A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
         /// </summary>
         [DataMember]
-        public Max40Text AccountId;
+        public string AccountId;
 
         /// <summary>
         /// Specifies the sub type of account (product family group).
@@ -49,7 +54,7 @@ namespace ModelBank.Resources.Objects
         /// Specifies the description of the account type.
         /// </summary>
         [DataMember]
-        public Max35Text? Description; //why is this only 35?
+        public string? Description; //why is this only 35?
 
         /// <summary>
         /// Maturity date for the account.
@@ -61,7 +66,7 @@ namespace ModelBank.Resources.Objects
         /// The nickname of the account, assigned by the account owner in order to provide an additional means of identification of the account.
         /// </summary>
         [DataMember]
-        public Max70Text? Nickname;
+        public string? Nickname;
 
         /// <summary>
         /// Date on which the account and related basic services are effectively operational for the account owner.

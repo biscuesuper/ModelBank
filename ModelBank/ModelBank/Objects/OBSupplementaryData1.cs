@@ -8,6 +8,11 @@ namespace ModelBank.Resources.Objects
     [DataContract]
     public class OBSupplementaryData1
     {
+        public OBSupplementaryData1()
+        {
+
+        }
+
         //TODO: find class description
     }
 }

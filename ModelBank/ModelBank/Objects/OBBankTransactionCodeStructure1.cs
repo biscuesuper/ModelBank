@@ -5,6 +5,11 @@ namespace ModelBank.Resources.Objects
     [DataContract]
     public class OBBankTransactionCodeStructure1
     {
+        public OBBankTransactionCodeStructure1()
+        {
+
+        }
+
         /// <summary>
         /// Specifies the family within a domain.	
         /// </summary>

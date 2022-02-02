@@ -5,6 +5,11 @@ namespace ModelBank.Resources.Objects
     [DataContract]
     public class OBReadDataBalance1
     {
+        public OBReadDataBalance1()
+        {
+
+        }
+
         /// <summary>
         /// Set of elements used to define the balance details.
         /// </summary>

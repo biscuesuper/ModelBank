@@ -6,6 +6,11 @@ namespace ModelBank.Resources.Objects
     [DataContract]
     public class OBCashBalance1
     {
+        public OBCashBalance1()
+        {
+
+        }
+
         /// <summary>
         /// Amount of money of the cash balance.
         /// </summary>
@@ -22,7 +27,7 @@ namespace ModelBank.Resources.Objects
         /// A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
         /// </summary>
         [DataMember]
-        public Max40Text AccountId;
+        public string AccountId;
 
         /// <summary>
         /// Indicates whether the balance is a credit or a debit balance. Usage: A zero balance is considered to be a credit balance.

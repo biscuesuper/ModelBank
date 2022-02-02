@@ -6,6 +6,11 @@ namespace ModelBank.Resources.Objects
     [DataContract]
     public class OBCurrencyExchange5
     {
+        public OBCurrencyExchange5()
+        {
+
+        }
+
         /// <summary>
         /// Amount of money to be moved between the debtor and creditor, before deduction of charges, 
         /// expressed in the currency as ordered by the initiating party.	
@@ -17,7 +22,7 @@ namespace ModelBank.Resources.Objects
         /// Unique identification to unambiguously identify the foreign exchange contract.	
         /// </summary>
         [DataMember]
-        public Max35Text? ContractIdentification;
+        public string? ContractIdentification;
 
         /// <summary>
         /// Factor used to convert an amount from one currency into another. 

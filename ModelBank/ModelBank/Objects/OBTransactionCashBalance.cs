@@ -6,6 +6,11 @@ namespace ModelBank.Resources.Objects
     [DataContract]
     public class OBTransactionCashBalance
     {
+        public OBTransactionCashBalance()
+        {
+
+        }
+
         /// <summary>
         /// A number of monetary units specified in an active currency where the unit of currency is explicit and compliant with ISO 4217.	
         /// </summary>

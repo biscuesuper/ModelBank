@@ -5,6 +5,11 @@ namespace ModelBank.Resources.Objects
     [DataContract]
     public class OBReadDataTransaction6
     {
+        public OBReadDataTransaction6()
+        {
+
+        }
+
         /// <summary>
         /// Provides further details on an entry in the report.	
         /// </summary>

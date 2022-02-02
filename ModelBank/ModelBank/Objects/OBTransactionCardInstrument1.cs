@@ -6,6 +6,11 @@ namespace ModelBank.Resources.Objects
     [DataContract]
     public class OBTransactionCardInstrument1
     {
+        public OBTransactionCardInstrument1()
+        {
+
+        }
+
         /// <summary>
         /// The card authorisation type.	
         /// </summary>
@@ -23,13 +28,13 @@ namespace ModelBank.Resources.Objects
         /// This identification is known by the account owner, and may be masked.	
         /// </summary>
         [DataMember]
-        public Max34Text? Identification;
+        public string? Identification;
 
         /// <summary>
         /// Name of the cardholder using the card instrument.	
         /// </summary>
         [DataMember]
-        public Max70Text? Name;
+        public string? Name;
 
     }
 }

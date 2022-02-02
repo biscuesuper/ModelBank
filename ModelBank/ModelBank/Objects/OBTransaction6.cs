@@ -6,6 +6,11 @@ namespace ModelBank.Resources.Objects
     [DataContract]
     public class OBTransaction6
     {
+        public OBTransaction6()
+        {
+
+        }
+
         /// <summary>
         /// Amount of money in the cash transaction entry.	
         /// </summary>
@@ -86,13 +91,13 @@ namespace ModelBank.Resources.Objects
         /// A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
         /// </summary>
         [DataMember]
-        public Max40Text AccountId;
+        public string AccountId;
 
         /// <summary>
         /// Information that locates and identifies a specific address for a transaction entry, that is presented in free format text.	
         /// </summary>
         [DataMember]
-        public Max70Text? AddressLine;
+        public string? AddressLine;
 
         /// <summary>
         /// Date and time when a transaction entry is posted to an account on the account servicer's books. 
@@ -111,7 +116,7 @@ namespace ModelBank.Resources.Objects
         /// Unique reference for the statement. This reference may be optionally populated if available.
         /// </summary>
         [DataMember]
-        public Max35Text StatementReference; //typo in the documentation, but I believe this is 0..1 not 0..n
+        public string StatementReference; //typo in the documentation, but I believe this is 0..1 not 0..n
 
         /// <summary>
         /// Status of a transaction entry on the books of the account servicer.
@@ -123,13 +128,13 @@ namespace ModelBank.Resources.Objects
         /// Unique identifier for the transaction within an servicing institution. This identifier is both unique and immutable.
         /// </summary>
         [DataMember]
-        public Max210Text? TransactionId;
+        public string? TransactionId;
 
         /// <summary>
         /// Further details of the transaction. This is the transaction narrative, which is unstructured text.	
         /// </summary>
         [DataMember]
-        public Max500Text? TransactionInformation;
+        public string? TransactionInformation;
 
         /// <summary>
         /// Specifies the Mutability of the Transaction record.	
@@ -141,7 +146,7 @@ namespace ModelBank.Resources.Objects
         /// Unique reference for the transaction. This reference is optionally populated, and may as an example be the FPID in the Faster Payments context.
         /// </summary>
         [DataMember]
-        public Max210Text? TransactionReference;
+        public string? TransactionReference;
 
         /// <summary>
         /// Date and time at which assets become available to the account owner in case of a credit entry, or cease to be available to the account owner 
