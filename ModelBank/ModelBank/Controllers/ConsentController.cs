@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ModelBank.Library;
-using ModelBank.Resources.Objects;
+using OBData.Objects;
 
 namespace ModelBank.Resources.Controllers
 {

@@ -1,4 +1,4 @@
-﻿using ModelBank.Resources.Objects;
+﻿using OBData.Objects;
 
 namespace ModelBank.Library
 {

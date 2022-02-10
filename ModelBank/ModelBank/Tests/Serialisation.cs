@@ -1,5 +1,5 @@
 ﻿//using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ModelBank.Resources.Objects;
+using OBData.Objects;
 
 namespace ModelBank.Resources.Tests
 {

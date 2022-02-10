@@ -2,12 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Net;
-using ModelBank.Objects;
 using Newtonsoft.Json;
-using ModelBank.Resources.Objects;
-using ModelBank.Resources.Tests;
-using ModelBank.Library;
-using ModelBank.Resources.Enums;
+using OBData.Objects;
+using OBData.Enums;
 
 namespace AISP.Controllers
 {
@@ -98,7 +95,7 @@ namespace AISP.Controllers
             HttpResponseMessage response = _client.GetAsync(url + $"/{testAccId}/transactions").Result;
             if (response.IsSuccessStatusCode)
             {
-                var a = response.Content.ReadAsAsync<List<Txn>>().Result;
+                var a = response.Content.ReadAsAsync<List<OBReadTransaction6>>().Result;
                 //_resultsView = a.ToString();
                 _resultsView = JsonConvert.SerializeObject(a);
             }

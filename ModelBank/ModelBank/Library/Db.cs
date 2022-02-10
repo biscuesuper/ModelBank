@@ -1,6 +1,5 @@
-﻿using ModelBank.Objects;
-using ModelBank.Resources.Objects;
-using ModelBank.Resources.Enums;
+﻿using OBData.Objects;
+using OBData.Enums;
 using System.Data;
 using System.Data.SqlClient;
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ModelBank.Auth.Models;
-using ModelBank.Resources.Objects;
+using OBData.Objects;
 using System.Diagnostics;
 
 namespace ModelBank.Auth.Controllers
