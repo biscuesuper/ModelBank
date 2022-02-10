@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ModelBank.Objects.Account>
+﻿@model IEnumerable<OBData.Objects.OBAccount6>
 
 @{
     ViewData["Title"] = "Accounts";
@@ -14,13 +14,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.AccountId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                @Html.DisplayNameFor(model => model.AccountType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Balance)
+                @Html.DisplayNameFor(model => model.AccountSubType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nickname)
             </th>
             <th></th>
         </tr>
@@ -28,15 +31,18 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Balance)
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountSubType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nickname)
+            </th>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |

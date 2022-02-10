@@ -172,11 +172,11 @@ namespace ModelBank.Library
             }
         }
 
-        public async static Task<IEnumerable<Txn>?> GetAccountTxnsAsync(int accountId)
+        public async static Task<IEnumerable<OBReadTransaction6>?> GetAccountTxnsAsync(int accountId)
         {
             try
             {
-                List<Txn> txns = new List<Txn>();
+                List<OBReadTransaction6> txns = new List<OBReadTransaction6>();
                 using (var conn = new SqlConnection(connStr))
                 using (var cmd = new SqlCommand("[dbo].[GetAccountTxns]", conn) { CommandType = CommandType.StoredProcedure })
                 {
@@ -187,11 +187,11 @@ namespace ModelBank.Library
                     {
                         while (await dr.ReadAsync())
                         {
-                            Txn txn = new Txn();
-                            txn.Id = Convert.ToInt32(dr["Id"].ToString());
-                            txn.AccountId = Convert.ToInt32(dr["AccountId"].ToString());
-                            txn.Amount = Convert.ToDecimal(dr["Amount"].ToString());
-                            txn.Date = Convert.ToDateTime(dr["Date"].ToString());
+                            OBReadTransaction6 txn = new OBReadTransaction6();
+                            //txn.Id = Convert.ToInt32(dr["Id"].ToString());
+                            //txn.AccountId = Convert.ToInt32(dr["AccountId"].ToString());
+                            //txn.Amount = Convert.ToDecimal(dr["Amount"].ToString());
+                            //txn.Date = Convert.ToDateTime(dr["Date"].ToString());
                             txns.Add(txn);
                         }
                     }
