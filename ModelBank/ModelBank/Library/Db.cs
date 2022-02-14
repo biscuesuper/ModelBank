@@ -15,6 +15,81 @@ namespace ModelBank.Library
             return ExecuteProc<OBAccount6>($"exec [dbo].[GetOBAccount6] {AccountId}");
         }
 
+        public static OBActiveOrHistoricCurrencyAndAmount GetOBActiveOrHistoricCurrencyAndAmount(string id)
+        {
+            return ExecuteProc<OBActiveOrHistoricCurrencyAndAmount>($"exec [dbo].[GetOBActiveOrHistoricCurrencyAndAmount] {id}");
+        }
+
+        public static OBBankTransactionCodeStructure1 GetOBBankTransactionCodeStructure1(string id)
+        {
+            return ExecuteProc<OBBankTransactionCodeStructure1>($"exec [dbo].[GetOBBankTransactionCodeStructure1] {id}");
+        }
+
+        public static OBBranchAndFinancialInstitutionIdentification5 GetOBBranchAndFinancialInstitutionIdentification5(string id)
+        {
+            return ExecuteProc<OBBranchAndFinancialInstitutionIdentification5>($"exec [dbo].[GetOBBranchAndFinancialInstitutionIdentification5] {id}");
+        }
+
+        public static OBBranchAndFinancialInstitutionIdentification6 GetOBBranchAndFinancialInstitutionIdentification6(string id)
+        {
+            return ExecuteProc<OBBranchAndFinancialInstitutionIdentification6>($"exec [dbo].[GetOBBranchAndFinancialInstitutionIdentification6] {id}");
+        }
+
+        public static OBCashAccount5 GetOBCashAccount5(string id)
+        {
+            return ExecuteProc<OBCashAccount5>($"exec [dbo].[GetOBCashAccount5] {id}");
+        }
+
+        public static OBCashAccount6 GetOBCashAccount6(string id)
+        {
+            return ExecuteProc<OBCashAccount6>($"exec [dbo].[GetOBCashAccount6] {id}");
+        }
+
+        public static OBCashBalance1 GetOBCashBalance1(string id)
+        {
+            return ExecuteProc<OBCashBalance1>($"exec [dbo].[GetOBCashBalance1] {id}");
+        }
+
+        public static OBCurrencyExchange5 GetOBCurrencyExchange5(string id)
+        {
+            return ExecuteProc<OBCurrencyExchange5>($"exec [dbo].[GetOBCurrencyExchange5] {id}");
+        }
+
+        public static OBMerchantDetails1 GetOBMerchantDetails1(string id)
+        {
+            return ExecuteProc<OBMerchantDetails1>($"exec [dbo].[GetOBMerchantDetails1] {id}");
+        }
+
+        public static OBPostalAddress6 GetOBPostalAddress6(string id)
+        {
+            return ExecuteProc<OBPostalAddress6>($"exec [dbo].[GetOBPostalAddress6] {id}");
+        }
+
+        public static OBSupplementaryData1 GetOBSupplementaryData1(string id)
+        {
+            return ExecuteProc<OBSupplementaryData1>($"exec [dbo].[GetOBSupplementaryData1] {id}");
+        }
+
+        public static OBTransaction6 GetOBTransaction6(string id)
+        {
+            return ExecuteProc<OBTransaction6>($"exec [dbo].[GetOBTransaction6] {id}");
+        }
+
+        public static OBTransactionCardInstrument1 GetOBTransactionCardInstrument1(string id)
+        {
+            return ExecuteProc<OBTransactionCardInstrument1>($"exec [dbo].[GetOBTransactionCardInstrument1] {id}");
+        }
+
+        public static OBTransactionCashBalance GetOBTransactionCashBalance(string id)
+        {
+            return ExecuteProc<OBTransactionCashBalance>($"exec [dbo].[GetOBTransactionCashBalance] {id}");
+        }
+
+        public static ProprietaryBankTransactionCodeStructure1 GetProprietaryBankTransactionCodeStructure1(string id)
+        {
+            return ExecuteProc<ProprietaryBankTransactionCodeStructure1>($"exec [dbo].[GetProprietaryBankTransactionCodeStructure1] {id}");
+        }
+
         public static T ExecuteProc<T>(string command) where T : new()
         {
             T res = new T();
