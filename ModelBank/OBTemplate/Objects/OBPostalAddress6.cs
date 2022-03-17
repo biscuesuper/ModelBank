@@ -15,60 +15,60 @@ namespace OBData.Objects
         /// Identifies the nature of the postal address.	
         /// </summary>
         [DataMember]
-        public OBAddressTypeCode? AddressType;
+        public OBAddressTypeCode? AddressType { get; set; }
 
         /// <summary>
         /// Identification of a division of a large organisation or building.	
         /// </summary>
         [DataMember]
-        public string? Department;
+        public string? Department { get; set; }
 
         /// <summary>
         /// Identification of a sub-division of a large organisation or building.	
         /// </summary>
         [DataMember]
-        public string? SubDepartment;
+        public string? SubDepartment { get; set; }
 
         /// <summary>
         /// Name of a street or thoroughfare.	
         /// </summary>
         [DataMember]
-        public string? StreetName;
+        public string? StreetName { get; set; }
 
         /// <summary>
         /// Number that identifies the position of a building on a street.	
         /// </summary>
         [DataMember]
-        public string? BuildingNumber;
+        public string? BuildingNumber { get; set; }
 
         /// <summary>
         /// Identifier consisting of a group of letters and/or numbers that is added to a postal address to assist the sorting of mail.	
         /// </summary>
         [DataMember]
-        public string? PostCode;
+        public string? PostCode { get; set; }
 
         /// <summary>
         /// Name of a built-up area, with defined boundaries, and a local government.	
         /// </summary>
         [DataMember]
-        public string? TownName;
+        public string? TownName { get; set; }
 
         /// <summary>
         /// Identifies a subdivision of a country such as state, region, county.	
         /// </summary>
         [DataMember]
-        public string? CountrySubDivision;
+        public string? CountrySubDivision { get; set; }
 
         /// <summary>
         /// Nation with its own government.	
         /// </summary>
         [DataMember]
-        public CountryCode? Country;
+        public string? Country { get; set; }
 
         /// <summary>
         /// Information that locates and identifies a specific address, as defined by postal services, presented in free format text.	
         /// </summary>
         [DataMember]
-        public string? AddressLine;
+        public string? AddressLine { get; set; }
     }
 }

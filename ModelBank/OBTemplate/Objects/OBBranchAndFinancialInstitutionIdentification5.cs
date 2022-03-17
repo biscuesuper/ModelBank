@@ -20,12 +20,12 @@ namespace OBData.Objects
         /// Unique and unambiguous identification of the servicing institution.
         /// </summary>
         [DataMember]
-        public string Identification;
+        public string Identification { get; set; }
 
         /// <summary>
         /// Name of the identification scheme, in a coded form as published in an external list.
         /// </summary>
         [DataMember]
-        public OBExternalFinancialInstitutionIdentification4Code SchemeName;
+        public OBExternalFinancialInstitutionIdentification4Code SchemeName { get; set; }
     }
 }

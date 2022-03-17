@@ -11,6 +11,6 @@ namespace OBData.Objects
         }
 
         [DataMember]
-        public OBReadDataBalance1 Data;
+        public OBReadDataBalance1 Data { get; set; }
     }
 }

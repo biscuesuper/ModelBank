@@ -14,6 +14,6 @@ namespace OBData.Objects
         /// Provides further details on an entry in the report.	
         /// </summary>
         [DataMember]
-        public IEnumerable<OBTransaction6> Transaction = new List<OBTransaction6>();
+        public ICollection<OBTransaction6> Transaction { get; set; } = new List<OBTransaction6>();
     }
 }

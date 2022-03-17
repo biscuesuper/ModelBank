@@ -16,7 +16,7 @@ namespace OBData.Objects
         /// Provides the details to identify an account.
         /// </summary>
         [DataMember]
-        public ICollection<OBCashAccount5> Account { get; set; }
+        public ICollection<OBCashAccount5> Account { get; set; } = new List<OBCashAccount5>();
 
         /// <summary>
         /// Party that manages the account on behalf of the account owner, that is manages the registration and booking of 
@@ -49,7 +49,7 @@ namespace OBData.Objects
         /// needs to identify which currency needs to be used for settlement on the account.
         /// </summary>
         [DataMember]
-        public ActiveOrHistoricCurrencyCode? Currency { get; set; }
+        public string? Currency { get; set; }
 
         /// <summary>
         /// Specifies the description of the account type.
@@ -61,7 +61,7 @@ namespace OBData.Objects
         /// Maturity date for the account.
         /// </summary>
         [DataMember]
-        public ISODate? MaturityDate { get; set; }
+        public DateTime? MaturityDate { get; set; }
 
         /// <summary>
         /// The nickname of the account, assigned by the account owner in order to provide an additional means of identification of the account.
@@ -73,7 +73,7 @@ namespace OBData.Objects
         /// Date on which the account and related basic services are effectively operational for the account owner.
         /// </summary>
         [DataMember]
-        public ISODate? OpeningDate { get; set; }
+        public DateTime? OpeningDate { get; set; }
 
         /// <summary>
         /// Specifies the status of account resource in code form.
@@ -85,7 +85,7 @@ namespace OBData.Objects
         /// Date and time at which the resource status was updated.
         /// </summary>
         [DataMember]
-        public ISODateTime? StatusUpdateDateTime { get; set; }
+        public DateTime? StatusUpdateDateTime { get; set; }
 
         /// <summary>
         /// The switch status for the account.

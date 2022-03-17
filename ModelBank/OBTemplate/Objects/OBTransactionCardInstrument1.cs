@@ -15,26 +15,26 @@ namespace OBData.Objects
         /// The card authorisation type.	
         /// </summary>
         [DataMember]
-        public OBExternalCardAuthorisationType1Code? AuthorisationType;
+        public OBExternalCardAuthorisationType1Code? AuthorisationType { get; set; }
 
         /// <summary>
         /// Name of the card scheme.	 
         /// </summary>
         [DataMember]
-        public OBExternalCardSchemeType1Code CardSchemeName;
+        public OBExternalCardSchemeType1Code CardSchemeName { get; set; }
 
         /// <summary>
         /// Identification assigned by an institution to identify the card instrument used in the transaction. 
         /// This identification is known by the account owner, and may be masked.	
         /// </summary>
         [DataMember]
-        public string? Identification;
+        public string? Identification { get; set; }
 
         /// <summary>
         /// Name of the cardholder using the card instrument.	
         /// </summary>
         [DataMember]
-        public string? Name;
+        public string? Name { get; set; }
 
     }
 }

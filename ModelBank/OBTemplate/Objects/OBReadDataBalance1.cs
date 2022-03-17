@@ -14,6 +14,6 @@ namespace OBData.Objects
         /// Set of elements used to define the balance details.
         /// </summary>
         [DataMember]
-        public IEnumerable<OBCashBalance1> Balance = new List<OBCashBalance1>();
+        public ICollection<OBCashBalance1> Balance { get; set; } = new List<OBCashBalance1>();
     }
 }

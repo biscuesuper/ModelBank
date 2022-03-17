@@ -16,13 +16,13 @@ namespace OBData.Objects
         /// expressed in the currency as ordered by the initiating party.	
         /// </summary>
         [DataMember]
-        public OBActiveOrHistoricCurrencyAndAmount? InstructedAmount;
+        public OBActiveOrHistoricCurrencyAndAmount? InstructedAmount { get; set; }
 
         /// <summary>
         /// Unique identification to unambiguously identify the foreign exchange contract.	
         /// </summary>
         [DataMember]
-        public string? ContractIdentification;
+        public string? ContractIdentification { get; set; }
 
         /// <summary>
         /// Factor used to convert an amount from one currency into another. 
@@ -30,31 +30,31 @@ namespace OBData.Objects
         /// Usage: ExchangeRate expresses the ratio between UnitCurrency and QuotedCurrency (ExchangeRate = UnitCurrency/QuotedCurrency).	
         /// </summary>
         [DataMember]
-        public BaseOneRate ExchangeRate;
+        public BaseOneRate ExchangeRate { get; set; }
 
         /// <summary>
         /// Date and time at which an exchange rate is quoted.	
         /// </summary>
         [DataMember]
-        public ISODateTime? QuotationDate;
+        public DateTime? QuotationDate { get; set; }
 
         /// <summary>
         /// Currency from which an amount is to be converted in a currency conversion.	
         /// </summary>
         [DataMember]
-        public ActiveOrHistoricCurrencyCode SourceCurrency;
+        public string SourceCurrency { get; set; }
 
         /// <summary>
         /// Currency into which an amount is to be converted in a currency conversion.	
         /// </summary>
         [DataMember]
-        public ActiveOrHistoricCurrencyCode? TargetCurrency;
+        public string? TargetCurrency { get; set; }
 
         /// <summary>
         /// Currency in which the rate of exchange is expressed in a currency exchange. In the example 1GBP = xxxCUR, the unit currency is GBP.	
         /// </summary>
         [DataMember]
-        public ActiveOrHistoricCurrencyCode? UnitCurrency;
+        public string? UnitCurrency { get; set; }
 
     }
 }

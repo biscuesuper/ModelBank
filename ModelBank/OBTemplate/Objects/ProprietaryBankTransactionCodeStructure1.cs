@@ -14,12 +14,12 @@ namespace OBData.Objects
         /// Proprietary bank transaction code to identify the underlying transaction.	
         /// </summary>
         [DataMember]
-        public string Code;
+        public string Code { get; set; }
 
         /// <summary>
         /// Identification of the issuer of the proprietary bank transaction code.	
         /// </summary>
         [DataMember]
-        public string? Issuer;
+        public string? Issuer { get; set; }
     }
 }

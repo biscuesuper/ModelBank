@@ -15,19 +15,19 @@ namespace OBData.Objects
         /// Amount of money of the credit line.
         /// </summary>
         [DataMember]
-        public OBActiveOrHistoricCurrencyAndAmount? Amount;
+        public OBActiveOrHistoricCurrencyAndAmount? Amount { get; set; }
 
         /// <summary>
         /// Indicates whether or not the credit line is included in the balance of the account. 
         /// Usage: If not present, credit line is not included in the balance amount of the account.
         /// </summary>
         [DataMember]
-        public bool Included;
+        public bool Included { get; set; }
 
         /// <summary>
         /// Limit type, in a coded form.
         /// </summary>
         [DataMember]
-        public OBExternalLimitType1Code? Type;
+        public OBExternalLimitType1Code? Type { get; set; }
     }
 }

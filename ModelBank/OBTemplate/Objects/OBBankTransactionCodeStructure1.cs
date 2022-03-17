@@ -14,12 +14,12 @@ namespace OBData.Objects
         /// Specifies the family within a domain.	
         /// </summary>
         [DataMember]
-        public ExternalBankTransactionFamily1Code Code;
+        public string Code { get; set; }
 
         /// <summary>
         /// Specifies the sub-product family within a specific family.	
         /// </summary>
         [DataMember]
-        public ExternalBankTransactionSubFamily1Code SubCode;
+        public string SubCode { get; set; }
     }
 }

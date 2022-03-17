@@ -15,36 +15,36 @@ namespace OBData.Objects
         /// Amount of money of the cash balance.
         /// </summary>
         [DataMember]
-        public OBActiveOrHistoricCurrencyAndAmount Amount;
+        public OBActiveOrHistoricCurrencyAndAmount Amount { get; set; }
 
         /// <summary>
         /// Set of elements used to provide details on the credit line.
         /// </summary>
         [DataMember]
-        public IEnumerable<OBCreditLine1> CreditLine = new List<OBCreditLine1>();
+        public IEnumerable<OBCreditLine1> CreditLine { get; set; }
 
         /// <summary>
         /// A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.
         /// </summary>
         [DataMember]
-        public string AccountId;
+        public string AccountId { get; set; }
 
         /// <summary>
         /// Indicates whether the balance is a credit or a debit balance. Usage: A zero balance is considered to be a credit balance.
         /// </summary>
         [DataMember]
-        public OBCreditDebitCode CreditDebitIndicator;
+        public OBCreditDebitCode CreditDebitIndicator { get; set; }
 
         /// <summary>
         /// Indicates the date (and time) of the balance.
         /// </summary>
         [DataMember]
-        public ISODateTime DateTime;
+        public DateTime DateTime { get; set; }
 
         /// <summary>
         /// Balance type, in a coded form.
         /// </summary>
         [DataMember]
-        public OBBalanceType1Code Type;
+        public OBBalanceType1Code Type { get; set; }
     }
 }
