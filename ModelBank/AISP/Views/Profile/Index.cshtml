@@ -10,16 +10,13 @@
     <br />
     
     <ul>
-        <li><a asp-area="" asp-controller="Home" asp-action="GetAccount">Get Account</a></li>
-        <li><a asp-area="" asp-controller="Home" asp-action="GetAccounts">Get Accounts</a></li>
-        <li><a asp-area="" asp-controller="Home" asp-action="GetAccountBalance">Get Account Balance</a></li>
-        <li><a asp-area="" asp-controller="Home" asp-action="GetAccountTxns">Get Account Txns</a></li>
-        <li><a asp-area="" asp-controller="Home" asp-action="PostAccessConsents">Post Access Consents</a></li>
-        <li><a asp-area="" asp-controller="Home" asp-action="GetAccessConsents">Get Access Consents</a></li>
-        <li><a asp-area="" asp-controller="Home" asp-action="DeleteAccessConsents">Delete Access Consents</a></li>
+        <li><a asp-area="" asp-controller="Profile" asp-action="GetAccount">Get Account</a></li>
+        <li><a asp-area="" asp-controller="Profile" asp-action="GetAccounts">Get Accounts</a></li>
+        <li><a asp-area="" asp-controller="Profile" asp-action="GetAccountBalance">Get Account Balance</a></li>
+        <li><a asp-area="" asp-controller="Profile" asp-action="GetAccountTxns">Get Account Txns</a></li>
     </ul>
 
     <div id="ResultsView" style="height:400px; width:1200px; background-color:black; color: white; overflow-x:auto; overflow-y:auto">
-        <p>@ViewData["ResultsView"]</p>
+        <p>@ViewData["Results"]</p>
     </div>
 }

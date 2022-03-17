@@ -221,7 +221,7 @@ namespace ModelBank.Library
                         // either a date
                         if (type == typeof(DateTime)) prop.SetValue(obj, DateTime.Parse((string)row[prop.Name]));
                         // or an ICollection
-                        if (type == typeof(ICollection<string>))
+                        else if (type == typeof(ICollection<string>))
                         {
                             prop.SetValue(obj, JsonSerializer.Deserialize<List<String>>((string)row[prop.Name]));
                         }

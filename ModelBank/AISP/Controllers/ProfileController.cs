@@ -1,17 +1,21 @@
 ﻿using AISP.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace AISP.Controllers
 {
     public class ProfileController : Controller
     {
         private static Login _user = new Login();
+        private static string _resultsView = "";
         
 
         public IActionResult Index()
         {
             if (!string.IsNullOrEmpty(_user.Username))
                 ViewData["Name"] = _user.Username;
+            if (!string.IsNullOrEmpty(_resultsView))
+                ViewData["Results"] = _resultsView;
             return View();
         }
 
@@ -22,35 +26,33 @@ namespace AISP.Controllers
             return RedirectToAction("Index");
         }
 
-        
+        public IActionResult GetAccount()
+        {
+            var result = Requests.GetAccount().Result;
+            _resultsView = JsonConvert.SerializeObject(result);
+            return RedirectToAction("Index");
+        }
 
-        //public IActionResult GetAccount()
-        //{
-        //    var result = Requests.GetAccount().Result;
-        //    _resultsView = JsonConvert.SerializeObject(result);
-        //    return Index();
-        //}
+        public IActionResult GetAccounts()
+        {
+            var result = Requests.GetAccounts().Result;
+            _resultsView = JsonConvert.SerializeObject(result);
+            return RedirectToAction("Index");
+        }
 
-        //public IActionResult GetAccounts()
-        //{
-        //    var result = Requests.GetAccounts().Result;
-        //    _resultsView = JsonConvert.SerializeObject(result);
-        //    return Index();
-        //}
+        public IActionResult GetAccountBalance()
+        {
+            var result = Requests.GetAccountBalance().Result;
+            _resultsView = JsonConvert.SerializeObject(result);
+            return RedirectToAction("Index");
+        }
 
-        //public IActionResult GetAccountBalance()
-        //{
-        //    var result = Requests.GetAccountBalance().Result;
-        //    _resultsView = JsonConvert.SerializeObject(result);
-        //    return Index();
-        //}
-
-        //public IActionResult GetAccountTxns()
-        //{
-        //    var result = Requests.GetAccountTxns().Result;
-        //    _resultsView = JsonConvert.SerializeObject(result);
-        //    return Index();
-        //}
+        public IActionResult GetAccountTxns()
+        {
+            var result = Requests.GetAccountTxns().Result;
+            _resultsView = JsonConvert.SerializeObject(result);
+            return RedirectToAction("Index");
+        }
 
         //public IActionResult PostAccessConsents()
         //{
