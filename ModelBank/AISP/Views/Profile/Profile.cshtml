@@ -5,11 +5,13 @@
 @{
     <h1>Hello, @ViewData["Name"]!</h1>
     <h2>2. Select your bank</h2>
-    <a href=@ViewData["ModelBankUrl"] target="_blank">Model Bank</a>
+   
     <a asp-area="" asp-controller="Profile" asp-action="SelectedModelBank">Model Bank</a>
+     <br />
+    <a href=@ViewData["ModelBankUrl"] target="_blank">Consent</a>
 
-
-
+    <br />
+    <br />
     
     <ul>
         <li><a asp-area="" asp-controller="Home" asp-action="GetAccount">Get Account</a></li>

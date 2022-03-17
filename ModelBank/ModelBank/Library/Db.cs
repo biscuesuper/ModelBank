@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
 using System.Text.Json;
+using ModelBank.Auth.Models;
 
 namespace ModelBank.Library
 {
@@ -128,11 +129,11 @@ namespace ModelBank.Library
             return consentResponse;
         }
 
-        public static OBReadDataConsentResponse1 AuthorizeOBReadConsentResponse1(string id)
+        public static OBReadDataConsentResponse1 AuthorizeOBReadConsentResponse1(string id, string accId)
         {
             var status = OBExternalRequestStatus1Code.Authorised;
             var statusUpdateDateTime = DateTime.Now.ToString();
-            var cmd = $"exec [dbo].[AuthorizeOBReadConsentResponse1] @ConsentId='{id}', @Status='{status}', @StatusUpdateDateTime='{statusUpdateDateTime}'";
+            var cmd = $"exec [dbo].[AuthorizeOBReadConsentResponse1] @ConsentId='{id}', @Status='{status}', @StatusUpdateDateTime='{statusUpdateDateTime}', @AccountId='{accId}'";
             var consentResponse = ExecuteProc<OBReadDataConsentResponse1>(cmd);
             return consentResponse;
         }
@@ -314,11 +315,11 @@ namespace ModelBank.Library
             }
         }
 
-        public static OBReadConsentResponse1 UserConsentResponse(string id)
+        public static OBReadConsentResponse1 UserConsentResponse(string id, string accId)
         {
             try
             {
-                var data = AuthorizeOBReadConsentResponse1(id);
+                var data = AuthorizeOBReadConsentResponse1(id, accId);
                 var result = new OBReadConsentResponse1()
                 {
                     Data = data,
@@ -344,6 +345,6 @@ namespace ModelBank.Library
             }
         }
 
-        
+
     }
 }

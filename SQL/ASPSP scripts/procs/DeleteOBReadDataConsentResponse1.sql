@@ -1,16 +1,17 @@
 USE [ASPSP]
 GO
 
-/****** Object:  StoredProcedure [dbo].[DeleteOBReadDataConsentResponse1]    Script Date: 17/03/2022 06:17:00 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteOBReadDataConsentResponse1]    Script Date: 17/03/2022 08:44:41 ******/
 DROP PROCEDURE [dbo].[DeleteOBReadDataConsentResponse1]
 GO
 
-/****** Object:  StoredProcedure [dbo].[DeleteOBReadDataConsentResponse1]    Script Date: 17/03/2022 06:17:00 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteOBReadDataConsentResponse1]    Script Date: 17/03/2022 08:44:41 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 
 -- =============================================
@@ -28,6 +29,9 @@ BEGIN
 
 
   DELETE FROM [dbo].[OBReadDataConsentResponse1]
+  WHERE [ConsentId] = @Id
+
+  DELETE FROM [dbo].[AccountConsentMappings]
   WHERE [ConsentId] = @Id
 END
 GO

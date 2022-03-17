@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ModelBank.Auth\ModelBank.Auth.csproj" />
     <ProjectReference Include="..\OBTemplate\OBData.csproj" />
   </ItemGroup>
 

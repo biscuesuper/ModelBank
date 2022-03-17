@@ -33,12 +33,11 @@ namespace ModelBank.Resources.Controllers
             return Db.GetConsentResponse(ConsentId);
         }
 
-        [HttpGet("{ConsentId}/user-consent", Name = "GetUserAccessConsent")]
-        public OBReadConsentResponse1 GetUserAccessConsent(/*[FromHeader(Name = "Authorization")] string auth,*/ [FromRoute] string ConsentId)
+        [HttpGet("{ConsentId}/user-consent/{AccountId}", Name = "GetUserAccessConsent")]
+        public OBReadConsentResponse1 GetUserAccessConsent(/*[FromHeader(Name = "Authorization")] string auth,*/ [FromRoute] string ConsentId, [FromRoute] string AccountId)
         {
-            _logger.Log(LogLevel.Information, $"/account-access-consents/{ConsentId}/user-consent");
-            Db.UserConsentResponse(ConsentId);
-            return Db.GetConsentResponse(ConsentId);
+            _logger.Log(LogLevel.Information, $"/account-access-consents/{ConsentId}/user-consent/{AccountId}");
+            return Db.UserConsentResponse(ConsentId, AccountId);
         }
 
         [HttpDelete("{ConsentId}", Name = "DeleteAccessConsent")]

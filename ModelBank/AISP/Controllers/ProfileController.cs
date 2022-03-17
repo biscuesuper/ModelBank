@@ -5,16 +5,18 @@ namespace AISP.Controllers
 {
     public class ProfileController : Controller
     {
-        private string modelBankUrl = "https://localhost:7073/";
+        private string modelBankUrl = "https://localhost:7073/Login/LoginConsent";
 
         private static Login _user = new Login();
+        private static string _url = "";
+        private static string _consentId = "";
 
-        public IActionResult Profile(string? url)
+        public IActionResult Profile()
         {
             if (!string.IsNullOrEmpty(_user.Username))
                 ViewData["Name"] = _user.Username;
-            if (!string.IsNullOrEmpty(url))
-                ViewData["ModelBankUrl"] = url;
+            if (!string.IsNullOrEmpty(_url))
+                ViewData["ModelBankUrl"] = _url;
             return View();
         }
 
@@ -28,14 +30,24 @@ namespace AISP.Controllers
         public IActionResult SelectedModelBank()
         {
             var consent = Db.CreateTestConsent();
-            var consentResponse = Requests.PostAccessConsent(consent);
-            // request consent
-            // create link with consent id
-            var url = modelBankUrl;
-            return RedirectToAction("Profile", new { url = url});
+            var consentResponse = Requests.PostAccessConsent(consent).Result;
+            _consentId = consentResponse.Data.ConsentId;
+            _url = $"{modelBankUrl}?consentId={_consentId}";
+            return RedirectToAction("Profile");
         }
 
-
+        public IActionResult LinkAccount()
+        {
+            var consent = Requests.GetAccessConsent(_consentId).Result;
+            if(consent.Data.Status == OBData.Enums.OBExternalRequestStatus1Code.Authorised)
+            {
+                return RedirectToAction("ViewAccounts", "Accounts", new { user = _user, consentId = _consentId});
+            }
+            else
+            {
+                return RedirectToAction("Profile");
+            }
+        }
 
         //public IActionResult GetAccount()
         //{
