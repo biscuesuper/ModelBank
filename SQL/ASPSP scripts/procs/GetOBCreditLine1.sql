@@ -1,16 +1,17 @@
 USE [ASPSP]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetOBCreditLine1]    Script Date: 16/03/2022 08:24:31 ******/
+/****** Object:  StoredProcedure [dbo].[GetOBCreditLine1]    Script Date: 17/03/2022 13:08:01 ******/
 DROP PROCEDURE [dbo].[GetOBCreditLine1]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetOBCreditLine1]    Script Date: 16/03/2022 08:24:31 ******/
+/****** Object:  StoredProcedure [dbo].[GetOBCreditLine1]    Script Date: 17/03/2022 13:08:01 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 -- =============================================
 -- Author:		<Author,,Name>
@@ -26,8 +27,8 @@ BEGIN
 	SET NOCOUNT ON;
 
     SELECT *
-  FROM [dbo].[OBOBCreditLine1]
-  WHERE [AmountId] = @Id
+  FROM [dbo].[OBCreditLine1]
+  WHERE [BalanceId] = @Id
 END
 GO
 

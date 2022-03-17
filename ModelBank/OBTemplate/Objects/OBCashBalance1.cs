@@ -21,7 +21,7 @@ namespace OBData.Objects
         /// Set of elements used to provide details on the credit line.
         /// </summary>
         [DataMember]
-        public IEnumerable<OBCreditLine1> CreditLine { get; set; }
+        public ICollection<OBCreditLine1> CreditLine { get; set; } = new List<OBCreditLine1>();
 
         /// <summary>
         /// A unique and immutable identifier used to identify the account resource. This identifier has no meaning to the account owner.

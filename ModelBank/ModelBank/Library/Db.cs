@@ -14,106 +14,162 @@ namespace ModelBank.Library
 
         public static OBAccount6 GetOBAccount6(string AccountId)
         {
-            var account = ExecuteProc<OBAccount6>($"exec [dbo].[GetOBAccount6] {AccountId}");
+            var seek = new Dictionary<string, string>();
+            seek.Add("ServicerId", "");
+            var account = ExecuteProc<OBAccount6>($"exec [dbo].[GetOBAccount6] {AccountId}", ref seek);
 
             var accaccount = GetOBCashAccount5(AccountId);
             if (accaccount != null) account.Account.Add(accaccount);
 
-            //var servicer = GetOBBranchAndFinancialInstitutionIdentification5(account.ServicerId);
+            if (!string.IsNullOrEmpty(seek["ServicerId"])) account.Servicer = GetOBBranchAndFinancialInstitutionIdentification5(seek["ServicerId"]);
             return account;
         }
 
         public static OBActiveOrHistoricCurrencyAndAmount GetOBActiveOrHistoricCurrencyAndAmount(string id)
         {
-            return ExecuteProc<OBActiveOrHistoricCurrencyAndAmount>($"exec [dbo].[GetOBActiveOrHistoricCurrencyAndAmount] {id}");
+            var seek = new Dictionary<string, string>();
+            return ExecuteProc<OBActiveOrHistoricCurrencyAndAmount>($"exec [dbo].[GetOBActiveOrHistoricCurrencyAndAmount] {id}", ref seek);
         }
 
         public static OBBankTransactionCodeStructure1 GetOBBankTransactionCodeStructure1(string id)
         {
-            return ExecuteProc<OBBankTransactionCodeStructure1>($"exec [dbo].[GetOBBankTransactionCodeStructure1] {id}");
+            var seek = new Dictionary<string, string>();
+            return ExecuteProc<OBBankTransactionCodeStructure1>($"exec [dbo].[GetOBBankTransactionCodeStructure1] {id}", ref seek);
         }
 
         public static OBBranchAndFinancialInstitutionIdentification5 GetOBBranchAndFinancialInstitutionIdentification5(string id)
         {
-            return ExecuteProc<OBBranchAndFinancialInstitutionIdentification5>($"exec [dbo].[GetOBBranchAndFinancialInstitutionIdentification5] {id}");
+            var seek = new Dictionary<string, string>();
+            return ExecuteProc<OBBranchAndFinancialInstitutionIdentification5>($"exec [dbo].[GetOBBranchAndFinancialInstitutionIdentification5] '{id}'", ref seek);
         }
 
         public static OBBranchAndFinancialInstitutionIdentification6 GetOBBranchAndFinancialInstitutionIdentification6(string id)
         {
-            return ExecuteProc<OBBranchAndFinancialInstitutionIdentification6>($"exec [dbo].[GetOBBranchAndFinancialInstitutionIdentification6] {id}");
+            var seek = new Dictionary<string, string>();
+            seek.Add("PostalAddressId", "");
+            var branchAndFin = ExecuteProc<OBBranchAndFinancialInstitutionIdentification6>($"exec [dbo].[GetOBBranchAndFinancialInstitutionIdentification6] {id}", ref seek);
+            if (!string.IsNullOrEmpty(seek["PostalAddressId"])) branchAndFin.PostalAddress = GetOBPostalAddress6(seek["PostalAddressId"]);
+            return branchAndFin;
         }
 
         public static OBCashAccount5 GetOBCashAccount5(string id)
         {
-            return ExecuteProc<OBCashAccount5>($"exec [dbo].[GetOBCashAccount5] {id}");
+            var seek = new Dictionary<string, string>();
+            return ExecuteProc<OBCashAccount5>($"exec [dbo].[GetOBCashAccount5] {id}", ref seek);
         }
 
         public static OBCashAccount6 GetOBCashAccount6(string id)
         {
-            return ExecuteProc<OBCashAccount6>($"exec [dbo].[GetOBCashAccount6] {id}");
+            var seek = new Dictionary<string, string>();
+            return ExecuteProc<OBCashAccount6>($"exec [dbo].[GetOBCashAccount6] {id}", ref seek);
         }
 
         public static OBCashBalance1 GetOBCashBalance1(string id)
         {
-            var balance = ExecuteProc<OBCashBalance1>($"exec [dbo].[GetOBCashBalance1] {id}");
-            // add amount
-            // add credit line
-
+            var seek = new Dictionary<string, string>();
+            seek.Add("AmountId", "");
+            seek.Add("Id", "");
+            var balance = ExecuteProc<OBCashBalance1>($"exec [dbo].[GetOBCashBalance1] {id}", ref seek);
+            if (!string.IsNullOrEmpty(seek["AmountId"])) balance.Amount = GetOBActiveOrHistoricCurrencyAndAmount(seek["AmountId"]);
+            if (!string.IsNullOrEmpty(seek["Id"]))
+            {
+                var creditLine = GetOBCreditLine1(seek["Id"]);
+                if (creditLine != null) balance.CreditLine.Add(creditLine);
+            }
             return balance;
         }
 
         public static OBCreditLine1 GetOBCreditLine1(string id)
         {
-            var creditLine = ExecuteProc<OBCreditLine1>($"exec [dbo].[GetOBCreditLine1] {id}");
-            // add amount
+            var seek = new Dictionary<string, string>();
+            seek.Add("AmountId", "");
+            var creditLine = ExecuteProc<OBCreditLine1>($"exec [dbo].[GetOBCreditLine1] {id}", ref seek);
+            if (!string.IsNullOrEmpty(seek["AmountId"])) creditLine.Amount = GetOBActiveOrHistoricCurrencyAndAmount(seek["AmountId"]);
             return creditLine;
         }
 
         public static OBCurrencyExchange5 GetOBCurrencyExchange5(string id)
         {
-            return ExecuteProc<OBCurrencyExchange5>($"exec [dbo].[GetOBCurrencyExchange5] {id}");
+            var seek = new Dictionary<string, string>();
+            return ExecuteProc<OBCurrencyExchange5>($"exec [dbo].[GetOBCurrencyExchange5] {id}", ref seek);
         }
 
         public static OBMerchantDetails1 GetOBMerchantDetails1(string id)
         {
-            return ExecuteProc<OBMerchantDetails1>($"exec [dbo].[GetOBMerchantDetails1] {id}");
+            var seek = new Dictionary<string, string>();
+            return ExecuteProc<OBMerchantDetails1>($"exec [dbo].[GetOBMerchantDetails1] {id}", ref seek);
         }
 
         public static OBPostalAddress6 GetOBPostalAddress6(string id)
         {
-            return ExecuteProc<OBPostalAddress6>($"exec [dbo].[GetOBPostalAddress6] {id}");
+            var seek = new Dictionary<string, string>();
+            return ExecuteProc<OBPostalAddress6>($"exec [dbo].[GetOBPostalAddress6] {id}", ref seek);
         }
 
         public static OBSupplementaryData1 GetOBSupplementaryData1(string id)
         {
-            return ExecuteProc<OBSupplementaryData1>($"exec [dbo].[GetOBSupplementaryData1] {id}");
+            var seek = new Dictionary<string, string>();
+            return ExecuteProc<OBSupplementaryData1>($"exec [dbo].[GetOBSupplementaryData1] {id}", ref seek);
         }
 
         public static OBTransaction6 GetOBTransaction6(string id)
         {
-            var txn = ExecuteProc<OBTransaction6>($"exec [dbo].[GetOBTransaction6] {id}");
-            // add a bunch of things
+            var seek = new Dictionary<string, string>();
+            seek.Add("AmountId", "");
+            seek.Add("BalanceId", "");
+            seek.Add("BankTransactionCodeId", "");
+            seek.Add("CardInstrumentId", "");
+            seek.Add("ChargeAmountId", "");
+            seek.Add("CreditorAccountId", "");
+            seek.Add("CreditorAgentId", "");
+            seek.Add("CurrencyExchangeId", "");
+            seek.Add("DebtorAccountId", "");
+            seek.Add("DebtorAgentId", "");
+            seek.Add("MerchantDetailsId", "");
+            seek.Add("ProprietaryBankTransactionCodeId", "");
+            seek.Add("SupplementaryDataId", "");
+
+            var txn = ExecuteProc<OBTransaction6>($"exec [dbo].[GetOBTransaction6] {id}", ref seek);
+
+            if (!string.IsNullOrEmpty(seek["AmountId"])) txn.Amount = GetOBActiveOrHistoricCurrencyAndAmount(seek["AmountId"]);
+            if (!string.IsNullOrEmpty(seek["BalanceId"])) txn.Balance = GetOBTransactionCashBalance(seek["BalanceId"]);
+            if (!string.IsNullOrEmpty(seek["BankTransactionCodeId"])) txn.BankTransactionCode = GetOBBankTransactionCodeStructure1(seek["BankTransactionCodeId"]);
+            if (!string.IsNullOrEmpty(seek["CardInstrumentId"])) txn.CardInstrument = GetOBTransactionCardInstrument1(seek["CardInstrumentId"]);
+            if (!string.IsNullOrEmpty(seek["ChargeAmountId"])) txn.ChargeAmount = GetOBActiveOrHistoricCurrencyAndAmount(seek["ChargeAmountId"]);
+            if (!string.IsNullOrEmpty(seek["CreditorAccountId"])) txn.CreditorAccount = GetOBCashAccount6(seek["CreditorAccountId"]);
+            if (!string.IsNullOrEmpty(seek["CreditorAgentId"])) txn.CreditorAgent = GetOBBranchAndFinancialInstitutionIdentification6(seek["CreditorAgentId"]);
+            if (!string.IsNullOrEmpty(seek["CurrencyExchangeId"])) txn.CurrencyExchange = GetOBCurrencyExchange5(seek["CurrencyExchangeId"]);
+            if (!string.IsNullOrEmpty(seek["DebtorAccountId"])) txn.DebtorAccount = GetOBCashAccount6(seek["DebtorAccountId"]);
+            if (!string.IsNullOrEmpty(seek["DebtorAgentId"])) txn.DebtorAgent = GetOBBranchAndFinancialInstitutionIdentification6(seek["DebtorAgentId"]);
+            if (!string.IsNullOrEmpty(seek["MerchantDetailsId"])) txn.MerchantDetails = GetOBMerchantDetails1(seek["MerchantDetailsId"]);
+            if (!string.IsNullOrEmpty(seek["ProprietaryBankTransactionCodeId"])) txn.ProprietaryBankTransactionCode = GetProprietaryBankTransactionCodeStructure1(seek["ProprietaryBankTransactionCodeId"]);
+            if (!string.IsNullOrEmpty(seek["SupplementaryDataId"])) txn.SupplementaryData = GetOBSupplementaryData1(seek["SupplementaryDataId"]);
+
             return txn;
         }
 
         public static OBTransactionCardInstrument1 GetOBTransactionCardInstrument1(string id)
         {
-            return ExecuteProc<OBTransactionCardInstrument1>($"exec [dbo].[GetOBTransactionCardInstrument1] {id}");
+            var seek = new Dictionary<string, string>();
+            return ExecuteProc<OBTransactionCardInstrument1>($"exec [dbo].[GetOBTransactionCardInstrument1] {id}", ref seek);
         }
 
         public static OBTransactionCashBalance GetOBTransactionCashBalance(string id)
         {
-            return ExecuteProc<OBTransactionCashBalance>($"exec [dbo].[GetOBTransactionCashBalance] {id}");
+            var seek = new Dictionary<string, string>();
+            return ExecuteProc<OBTransactionCashBalance>($"exec [dbo].[GetOBTransactionCashBalance] {id}", ref seek);
         }
 
         public static ProprietaryBankTransactionCodeStructure1 GetProprietaryBankTransactionCodeStructure1(string id)
         {
-            return ExecuteProc<ProprietaryBankTransactionCodeStructure1>($"exec [dbo].[GetProprietaryBankTransactionCodeStructure1] {id}");
+            var seek = new Dictionary<string, string>();
+            return ExecuteProc<ProprietaryBankTransactionCodeStructure1>($"exec [dbo].[GetProprietaryBankTransactionCodeStructure1] {id}", ref seek);
         }
 
         public static OBReadDataConsentResponse1 GetOBReadDataConsentResponse1(string id)
         {
-            return ExecuteProc<OBReadDataConsentResponse1>($"exec [dbo].[GetOBReadDataConsentResponse1] '{id}'");
+            var seek = new Dictionary<string, string>();
+            return ExecuteProc<OBReadDataConsentResponse1>($"exec [dbo].[GetOBReadDataConsentResponse1] '{id}'", ref seek);
         }
 
         public static OBReadDataConsentResponse1 SaveOBReadConsentResponse1(OBReadConsent1 consent)
@@ -125,7 +181,11 @@ namespace ModelBank.Library
             var cmd = $"exec [dbo].[SaveOBReadConsentResponse1] @CreationDateTime='{now}', @Status='{status}', @StatusUpdateDateTime='{now}', "
                 + $"@Permissions='{permissionsStr}', @ExpirationDateTime='{consent.Data.ExpirationDateTime}', "
                 + $"@TransactionFromDateTime='{consent.Data.TransactionFromDateTime}', @TransactionToDateTime='{consent.Data.TransactionToDateTime}'";
-            var consentResponse = ExecuteProc<OBReadDataConsentResponse1>(cmd);
+
+
+            var seek = new Dictionary<string, string>();
+            var consentResponse = ExecuteProc<OBReadDataConsentResponse1>(cmd, ref seek);
+
             return consentResponse;
         }
 
@@ -134,7 +194,10 @@ namespace ModelBank.Library
             var status = OBExternalRequestStatus1Code.Authorised;
             var statusUpdateDateTime = DateTime.Now.ToString();
             var cmd = $"exec [dbo].[AuthorizeOBReadConsentResponse1] @ConsentId='{id}', @Status='{status}', @StatusUpdateDateTime='{statusUpdateDateTime}', @AccountId='{accId}'";
-            var consentResponse = ExecuteProc<OBReadDataConsentResponse1>(cmd);
+
+            var seek = new Dictionary<string, string>();
+            var consentResponse = ExecuteProc<OBReadDataConsentResponse1>(cmd, ref seek);
+
             return consentResponse;
         }
 
@@ -149,7 +212,7 @@ namespace ModelBank.Library
             }
         }
 
-        public static T ExecuteProc<T>(string command) where T : new()
+        public static T ExecuteProc<T>(string command, ref Dictionary<string, string> seekObjects) where T : new()
         {
             T res = new T();
             DataTable dt = new DataTable();
@@ -161,6 +224,14 @@ namespace ModelBank.Library
 
                 var row = dt.Rows[0];
                 GetObject<T>(row, ref res);
+
+                foreach(var seekItem in seekObjects)
+                {
+                    if(row[seekItem.Key] != null)
+                    {
+                        seekObjects[seekItem.Key] = row[seekItem.Key]?.ToString();
+                    }
+                }
             }
             return res;
         }

@@ -22,7 +22,7 @@ namespace OBData.Objects
         /// Usage: If not present, credit line is not included in the balance amount of the account.
         /// </summary>
         [DataMember]
-        public bool Included { get; set; }
+        public string Included { get; set; }
 
         /// <summary>
         /// Limit type, in a coded form.

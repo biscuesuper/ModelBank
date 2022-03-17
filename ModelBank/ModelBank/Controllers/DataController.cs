@@ -45,7 +45,7 @@ namespace ModelBank.Controllers
         {
             _logger.Log(LogLevel.Information, $"/{AccountId}/balances");
             var balance = Db.GetBalance(AccountId);
-            return new OBReadBalance1();
+            return balance;
         }
 
         [HttpGet("transactions", Name = "GetTransactions")]
