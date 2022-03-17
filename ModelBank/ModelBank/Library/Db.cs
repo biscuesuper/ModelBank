@@ -3,6 +3,7 @@ using OBData.Enums;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
+using System.Text.Json;
 
 namespace ModelBank.Library
 {
@@ -15,7 +16,7 @@ namespace ModelBank.Library
             var account = ExecuteProc<OBAccount6>($"exec [dbo].[GetOBAccount6] {AccountId}");
 
             var accaccount = GetOBCashAccount5(AccountId);
-            if(accaccount != null) account.Account.Add(accaccount);
+            if (accaccount != null) account.Account.Add(accaccount);
 
             //var servicer = GetOBBranchAndFinancialInstitutionIdentification5(account.ServicerId);
             return account;
@@ -114,6 +115,39 @@ namespace ModelBank.Library
             return ExecuteProc<OBReadDataConsentResponse1>($"exec [dbo].[GetOBReadDataConsentResponse1] {id}");
         }
 
+        public static OBReadDataConsentResponse1 SaveOBReadConsentResponse1(OBReadConsent1 consent)
+        {
+            var permissionsStr = JsonSerializer.Serialize(consent.Data.Permissions);
+            var now = DateTime.Now.ToString();
+            var status = OBExternalRequestStatus1Code.AwaitingAuthorisation;
+
+            var cmd = $"exec [dbo].[SaveOBReadConsentResponse1] @CreationDateTime={now}, @Status={status}, @StatusUpdateDateTime={now}, "
+                + $"@Permissions={permissionsStr}, @ExpirationDateTime={consent.Data.ExpirationDateTime}, "
+                + $"@TransactionFromDateTime={consent.Data.TransactionFromDateTime}, @TransactionToDateTime={consent.Data.TransactionToDateTime}";
+            var consentResponse = ExecuteProc<OBReadDataConsentResponse1>(cmd);
+            return consentResponse;
+        }
+
+        public static OBReadDataConsentResponse1 AuthorizeOBReadConsentResponse1(string id)
+        {
+            var status = OBExternalRequestStatus1Code.Authorised;
+            var statusUpdateDateTime = DateTime.Now.ToString();
+            var cmd = $"exec [dbo].[AuthorizeOBReadConsentResponse1] @ConsentId={id}, @Status={status}, @StatusUpdateDateTime={statusUpdateDateTime}";
+            var consentResponse = ExecuteProc<OBReadDataConsentResponse1>(cmd);
+            return consentResponse;
+        }
+
+        public static void DeleteOBReadConsentResponse1(string id)
+        {
+            var procName = "DeleteOBReadConsentResponse1";
+            using (var conn = new SqlConnection(connStr))
+            using (var command = new SqlCommand(procName, conn) { CommandType = CommandType.StoredProcedure })
+            {
+                conn.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
         public static T ExecuteProc<T>(string command) where T : new()
         {
             T res = new T();
@@ -205,9 +239,6 @@ namespace ModelBank.Library
             }
         }
 
-
-
-
         public static OBReadAccount6 GetAccount(int id)
         {
             try
@@ -239,41 +270,73 @@ namespace ModelBank.Library
         }
 
 
-        public static OBReadConsentResponse1 CreateConsentResponse(OBReadConsent1 consent)
-        {
-            var result = new OBReadConsentResponse1(consent);
-            TempCache.Consents.Add(result);
-            return result;
-        }
-
-        public static OBReadConsentResponse1 GetConsentResponse(string id)
+        public static OBReadConsentResponse1 PostAccessConsent(OBReadConsent1 consent)
         {
             try
             {
-                var data = GetOBReadDataConsentResponse1(id.ToString());
-                return new OBReadConsentResponse1() { Data = data };
+                // AISP sends over an OBReadConsent, we process it in the database and return a OBReadConsentResponse1
+                OBReadDataConsentResponse1 data = SaveOBReadConsentResponse1(consent);
+                OBRisk2 risk = new OBRisk2(); // No fields have been identified for Risk
+                var result = new OBReadConsentResponse1()
+                {
+                    Data = data,
+                    Risk = new OBRisk2() // No fields have been identified for Risk
+                };
+                return result;
             }
             catch (Exception e)
             {
                 throw new Exception("No data " + e.Message);
             }
-            //var result = TempCache.Consents.Where(x => x.Data.ConsentId == id).Select(x => x).FirstOrDefault();
-            //return result;
         }
 
-        public static void UserConsentResponse(string id)
+
+        public static OBReadConsentResponse1 GetConsentResponse(string id)
         {
-            var result = TempCache.Consents.Where(x => x.Data.ConsentId == id).FirstOrDefault();
-            if (result != null)
+            try
             {
-                result.Data.Status = OBExternalRequestStatus1Code.Authorised;
-                result.Data.StatusUpdateDateTime = DateTime.Now.ToString();
+                var data = GetOBReadDataConsentResponse1(id);
+                var result = new OBReadConsentResponse1()
+                {
+                    Data = data,
+                    Risk = new OBRisk2() // No fields have been identified for Risk
+                };
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No data " + e.Message);
+            }
+        }
+
+        public static OBReadConsentResponse1 UserConsentResponse(string id)
+        {
+            try
+            {
+                var data = AuthorizeOBReadConsentResponse1(id);
+                var result = new OBReadConsentResponse1()
+                {
+                    Data = data,
+                    Risk = new OBRisk2() // No fields have been identified for Risk
+                };
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No data " + e.Message);
             }
         }
 
         public static void DeleteConsentResponse(string id)
         {
-            var result = TempCache.Consents.RemoveAll(x => x.Data.ConsentId == id);
+            try
+            {
+                DeleteOBReadConsentResponse1(id);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No data " + e.Message);
+            }
         }
 
         

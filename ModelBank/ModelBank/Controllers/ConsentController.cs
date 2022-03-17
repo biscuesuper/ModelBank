@@ -18,17 +18,12 @@ namespace ModelBank.Resources.Controllers
             _logger = logger;
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
 
         [HttpPost(Name = "PostAccessConsent")]
         public OBReadConsentResponse1 PostAccessConsent(/*[FromHeader(Name = "Authorization")] string auth,*/ [FromBody] OBReadConsent1 consent)
         {
             _logger.Log(LogLevel.Information, $"/account-access-consents");
-            return Db.CreateConsentResponse(consent);
+            return Db.PostAccessConsent(consent);
         }
 
         [HttpGet("{ConsentId}", Name = "GetAccessConsent")]
@@ -38,12 +33,6 @@ namespace ModelBank.Resources.Controllers
             return Db.GetConsentResponse(ConsentId);
         }
 
-        [HttpDelete("{ConsentId}", Name = "DeleteAccessConsent")]
-        public void DeleteAccessConsent(/*[FromHeader(Name = "Authorization")] string auth,*/ [FromRoute] string ConsentId)
-        {
-            _logger.Log(LogLevel.Information, $"/account-access-consents/{ConsentId}");
-        }
-
         [HttpGet("{ConsentId}/user-consent", Name = "GetUserAccessConsent")]
         public OBReadConsentResponse1 GetUserAccessConsent(/*[FromHeader(Name = "Authorization")] string auth,*/ [FromRoute] string ConsentId)
         {
@@ -51,5 +40,13 @@ namespace ModelBank.Resources.Controllers
             Db.UserConsentResponse(ConsentId);
             return Db.GetConsentResponse(ConsentId);
         }
+
+        [HttpDelete("{ConsentId}", Name = "DeleteAccessConsent")]
+        public void DeleteAccessConsent(/*[FromHeader(Name = "Authorization")] string auth,*/ [FromRoute] string ConsentId)
+        {
+            _logger.Log(LogLevel.Information, $"/account-access-consents/{ConsentId}");
+        }
+
+       
     }
 }
