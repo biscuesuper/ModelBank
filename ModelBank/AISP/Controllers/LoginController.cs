@@ -18,13 +18,13 @@ namespace AISP.Controllers
         [HttpPost]
         public IActionResult Login([Bind] Login ad)
         {
-            int res = Db.LoginCheck(ad);
-            if (res == 0)
+            var res = Db.LoginCheck(ad);
+            if (res == null)
             {
                 TempData["msg"] = "Username or Password is wrong.!";
                 return View();
             }
-            return View();
+            return RedirectToAction("LoginSuccess", "Profile", new { id = res.Id, username = res.Username});
         }
     }
 }

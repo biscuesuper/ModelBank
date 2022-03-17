@@ -14,15 +14,6 @@ namespace AISP.Controllers
 
         private string _resultsView= "";
 
-        private string url = "https://localhost:7259/open-banking/v1/aisp/accounts";
-
-        private string urlbase = "https://localhost:7259/open-banking/v1/aisp";
-
-        private static HttpClient _client = new HttpClient();
-
-        private string testAccId = "22289";
-
-        private static OBReadConsentResponse1 _consentResponse;
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -49,58 +40,6 @@ namespace AISP.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult GetAccount()
-        {
-           // Db.GetAccountAsync(22289);
-            _resultsView = "one account";
-            HttpResponseMessage response = _client.GetAsync(url + $"/22289").Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var a = response.Content.ReadAsAsync<OBReadAccount6>().Result;
-                //_resultsView = a.ToString();
-                _resultsView = JsonConvert.SerializeObject(a);
-            }
-            return Index();
-        }
-
-        public IActionResult GetAccounts()
-        {
-            _resultsView = "more accounts";
-            HttpResponseMessage response = _client.GetAsync(url + "/").Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var a = response.Content.ReadAsAsync<OBReadAccount6>().Result;
-                //_resultsView = a.ToString();
-                _resultsView = JsonConvert.SerializeObject(a);
-            }
-
-            return Index();
-        }
-
-        public IActionResult GetAccountBalance()
-        {
-            _resultsView = "one account bal";
-            HttpResponseMessage response = _client.GetAsync(url + $"/{testAccId}/balance").Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var a = response.Content.ReadAsAsync<decimal>().Result;
-                _resultsView = a.ToString();
-            }
-            return Index();
-        }
-
-        public IActionResult GetAccountTxns()
-        {
-            _resultsView = "one account txns";
-            HttpResponseMessage response = _client.GetAsync(url + $"/{testAccId}/transactions").Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var a = response.Content.ReadAsAsync<OBReadTransaction6>().Result;
-                //_resultsView = a.ToString();
-                _resultsView = JsonConvert.SerializeObject(a);
-            }
-            return Index();
-        }
 
         public IActionResult PostAccessConsents()
         {

@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using OBData.Enums;
+using OBData.Objects;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace AISP.Models
@@ -6,7 +8,7 @@ namespace AISP.Models
     public class Db
     {
         private static SqlConnection con = new SqlConnection("Server = localhost; Database=AISP;Trusted_Connection=True;");
-        public static int LoginCheck(Login ad)
+        public static Login LoginCheck(Login ad)
         {
             SqlCommand com = new SqlCommand("TryLogin", con);
             com.CommandType = CommandType.StoredProcedure;
@@ -15,15 +17,21 @@ namespace AISP.Models
             con.Open();
             DataTable dt = new DataTable();
             dt.Load(com.ExecuteReader());
-            var res = dt.Rows[0][0];
+            var res = dt.Rows[0];
             con.Close();
             if (res != null)
             {
-                var res_str = res.ToString();
-                int.TryParse(res_str, out var res_int);
-                if (res_int > 0) return res_int;
+                var loginAcc = new Login();
+                if (res["Id"] != null)
+                {
+                    int.TryParse(res.ToString(), out var id);
+                    loginAcc.Id = id;
+                }
+                if (res["Username"] != null) loginAcc.Username = res["Username"].ToString();
+                return loginAcc;
             }
-            return 0;
+            return null;
+        }
         }
     }
 }
