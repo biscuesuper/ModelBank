@@ -1,16 +1,17 @@
 USE [ASPSP]
 GO
 
-/****** Object:  StoredProcedure [dbo].[SaveOBReadConsentResponse1]    Script Date: 17/03/2022 06:17:00 ******/
+/****** Object:  StoredProcedure [dbo].[SaveOBReadConsentResponse1]    Script Date: 17/03/2022 07:05:20 ******/
 DROP PROCEDURE [dbo].[SaveOBReadConsentResponse1]
 GO
 
-/****** Object:  StoredProcedure [dbo].[SaveOBReadConsentResponse1]    Script Date: 17/03/2022 06:17:00 ******/
+/****** Object:  StoredProcedure [dbo].[SaveOBReadConsentResponse1]    Script Date: 17/03/2022 07:05:20 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 
 -- =============================================
@@ -55,6 +56,9 @@ BEGIN
 	@TransactionFromDateTime,
 	@TransactionToDateTime
 	)
+
+	select * from [dbo].[OBReadDataConsentResponse1]
+	where [ConsentId] = @myid
 END
 GO
 

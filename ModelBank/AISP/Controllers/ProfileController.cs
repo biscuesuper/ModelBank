@@ -5,7 +5,7 @@ namespace AISP.Controllers
 {
     public class ProfileController : Controller
     {
-        private string modelBankUrl = "";
+        private string modelBankUrl = "https://localhost:7073/";
 
         private static Login _user = new Login();
 
@@ -31,7 +31,7 @@ namespace AISP.Controllers
             var consentResponse = Requests.PostAccessConsent(consent);
             // request consent
             // create link with consent id
-            var url = "http://www.google.com";
+            var url = modelBankUrl;
             return RedirectToAction("Profile", new { url = url});
         }
 

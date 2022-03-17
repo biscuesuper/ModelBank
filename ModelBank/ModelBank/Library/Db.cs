@@ -121,9 +121,9 @@ namespace ModelBank.Library
             var now = DateTime.Now.ToString();
             var status = OBExternalRequestStatus1Code.AwaitingAuthorisation;
 
-            var cmd = $"exec [dbo].[SaveOBReadConsentResponse1] @CreationDateTime={now}, @Status={status}, @StatusUpdateDateTime={now}, "
-                + $"@Permissions={permissionsStr}, @ExpirationDateTime={consent.Data.ExpirationDateTime}, "
-                + $"@TransactionFromDateTime={consent.Data.TransactionFromDateTime}, @TransactionToDateTime={consent.Data.TransactionToDateTime}";
+            var cmd = $"exec [dbo].[SaveOBReadConsentResponse1] @CreationDateTime='{now}', @Status='{status}', @StatusUpdateDateTime='{now}', "
+                + $"@Permissions='{permissionsStr}', @ExpirationDateTime='{consent.Data.ExpirationDateTime}', "
+                + $"@TransactionFromDateTime='{consent.Data.TransactionFromDateTime}', @TransactionToDateTime='{consent.Data.TransactionToDateTime}'";
             var consentResponse = ExecuteProc<OBReadDataConsentResponse1>(cmd);
             return consentResponse;
         }
@@ -132,16 +132,16 @@ namespace ModelBank.Library
         {
             var status = OBExternalRequestStatus1Code.Authorised;
             var statusUpdateDateTime = DateTime.Now.ToString();
-            var cmd = $"exec [dbo].[AuthorizeOBReadConsentResponse1] @ConsentId={id}, @Status={status}, @StatusUpdateDateTime={statusUpdateDateTime}";
+            var cmd = $"exec [dbo].[AuthorizeOBReadConsentResponse1] @ConsentId='{id}', @Status='{status}', @StatusUpdateDateTime='{statusUpdateDateTime}'";
             var consentResponse = ExecuteProc<OBReadDataConsentResponse1>(cmd);
             return consentResponse;
         }
 
         public static void DeleteOBReadConsentResponse1(string id)
         {
-            var procName = "DeleteOBReadConsentResponse1";
+            var cmd = $"exec [DeleteOBReadConsentResponse1] {id}";
             using (var conn = new SqlConnection(connStr))
-            using (var command = new SqlCommand(procName, conn) { CommandType = CommandType.StoredProcedure })
+            using (var command = new SqlCommand(cmd, conn))
             {
                 conn.Open();
                 command.ExecuteNonQuery();
@@ -219,6 +219,11 @@ namespace ModelBank.Library
                         var type = prop.PropertyType;
                         // either a date
                         if (type == typeof(DateTime)) prop.SetValue(obj, DateTime.Parse((string)row[prop.Name]));
+                        // or an ICollection
+                        if (type == typeof(ICollection<string>))
+                        {
+                            prop.SetValue(obj, JsonSerializer.Deserialize<List<String>>((string)row[prop.Name]));
+                        }
                         // or an enum
                         else prop.SetValue(obj, Enum.Parse(type, (string)row[prop.Name]));
                     }
