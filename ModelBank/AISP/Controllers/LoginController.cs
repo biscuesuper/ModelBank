@@ -5,18 +5,14 @@ namespace AISP.Controllers
 {
     public class LoginController : Controller
     {
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public IActionResult Login([Bind] Login ad)
+        public IActionResult Index([Bind] Login ad)
         {
             var res = Db.LoginCheck(ad);
             if (res == null)

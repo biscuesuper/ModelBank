@@ -113,7 +113,7 @@ namespace ModelBank.Library
 
         public static OBReadDataConsentResponse1 GetOBReadDataConsentResponse1(string id)
         {
-            return ExecuteProc<OBReadDataConsentResponse1>($"exec [dbo].[GetOBReadDataConsentResponse1] {id}");
+            return ExecuteProc<OBReadDataConsentResponse1>($"exec [dbo].[GetOBReadDataConsentResponse1] '{id}'");
         }
 
         public static OBReadDataConsentResponse1 SaveOBReadConsentResponse1(OBReadConsent1 consent)
@@ -140,7 +140,7 @@ namespace ModelBank.Library
 
         public static void DeleteOBReadConsentResponse1(string id)
         {
-            var cmd = $"exec [DeleteOBReadConsentResponse1] {id}";
+            var cmd = $"exec [DeleteOBReadConsentResponse1] '{id}'";
             using (var conn = new SqlConnection(connStr))
             using (var command = new SqlCommand(cmd, conn))
             {
