@@ -1,6 +1,7 @@
 ﻿using AISP.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AISP.Controllers
 {
@@ -15,7 +16,7 @@ namespace AISP.Controllers
             if (!string.IsNullOrEmpty(_user.Username))
                 ViewData["Name"] = _user.Username;
             if (!string.IsNullOrEmpty(_resultsView))
-                ViewData["Results"] = _resultsView;
+                ViewBag.JsonData = JValue.Parse(_resultsView).ToString(Formatting.Indented).Replace("\r\n", "<br/>");
             return View();
         }
 

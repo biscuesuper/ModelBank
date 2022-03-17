@@ -4,19 +4,33 @@
 
 @{
     <h1>Hello, @ViewData["Name"]!</h1>
-   
-    <a asp-area="" asp-controller="Connect" asp-action="Index">Connect new account</a>
+    <a asp-area="" class="btn btn-primary btn-lg" asp-controller="Connect" asp-action="Index">Connect new account</a>
     <br />
     <br />
-    
-    <ul>
-        <li><a asp-area="" asp-controller="Profile" asp-action="GetAccount">Get Account</a></li>
-        <li><a asp-area="" asp-controller="Profile" asp-action="GetAccounts">Get Accounts</a></li>
-        <li><a asp-area="" asp-controller="Profile" asp-action="GetAccountBalance">Get Account Balance</a></li>
-        <li><a asp-area="" asp-controller="Profile" asp-action="GetAccountTxns">Get Account Txns</a></li>
-    </ul>
+    <section class="container-fluid" height="80%">
+        <div class="container-fluid overflow-auto">
+            <div class="row">
+                
+                <div class="row">
+                    <div class="col-4 text-center">
+                        <a asp-area="" class="btn btn-primary btn-lg" asp-controller="Profile" asp-action="GetAccount">Get Account</a>
+                    </div>
+                    <div class="col-4 text-center">
+                        <a asp-area="" class="btn btn-primary btn-lg" asp-controller="Profile" asp-action="GetAccountBalance">Get Account Balance</a>
+                    </div>
+                    <div class="col-4 text-center">
+                        <a asp-area="" class="btn btn-primary btn-lg" asp-controller="Profile" asp-action="GetAccountTxns">Get Account Txns</a>
+                    </div>
+                </div>
 
-    <div id="ResultsView" style="height:400px; width:1200px; background-color:black; color: white; overflow-x:auto; overflow-y:auto">
-        <p>@ViewData["Results"]</p>
-    </div>
+                 <figure class="md-5">
+                    <blockquote class="blockquote" style="font-family: Arial, sans-serif;">
+                        <div id="ResultsView" class="bg-dark text-light text-left" style="padding:10px">
+                            @Html.Raw(ViewBag.JsonData)
+                        </div>
+                    </blockquote>
+                </figure>
+            </div>
+        </div>
+    </section>
 }
