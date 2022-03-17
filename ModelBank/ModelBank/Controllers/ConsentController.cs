@@ -5,9 +5,7 @@ using OBData.Objects;
 namespace ModelBank.Resources.Controllers
 {
     [ApiController]
-    // [participant-path-prefix]/open-banking/[version]/[resource-group]/[resource]/[resource-id]/[sub-resource]
-    // https://superbank.com/apis/open-banking/v3.1/aisp/accounts/1234/transactions
-    [Route("/open-banking/v1/aisp/account-access-consents")] //[Route("[controller]")]
+    [Route("/open-banking/v1/aisp/account-access-consents")] 
     public class ConsentController : Controller
     {
 

@@ -181,40 +181,6 @@ namespace ModelBank.Library
                 }
                 catch (ArgumentException)
                 {
-                    // Legacy for ISO types
-                    //if (prop.PropertyType == typeof(ActiveOrHistoricCurrencyCode))
-                    //{
-                    //    prop.SetValue(obj, new ActiveOrHistoricCurrencyCode((string)row[prop.Name]));
-                    //}
-                    //else if (prop.PropertyType == typeof(CountryCode))
-                    //{
-                    //    prop.SetValue(obj, new CountryCode((string)row[prop.Name]));
-                    //}
-                    //else if (prop.PropertyType == typeof(ExternalBankTransactionFamily1Code))
-                    //{
-                    //    prop.SetValue(obj, new ExternalBankTransactionFamily1Code((string)row[prop.Name]));
-                    //}
-                    //else if (prop.PropertyType == typeof(ExternalBankTransactionSubFamily1Code))
-                    //{
-                    //    prop.SetValue(obj, new ExternalBankTransactionSubFamily1Code((string)row[prop.Name]));
-                    //}
-                    //else if (prop.PropertyType == typeof(ISODate))
-                    //{
-                    //    prop.SetValue(obj, new ISODate((string)row[prop.Name]));
-                    //}
-                    //else if (prop.PropertyType == typeof(ISODateTime))
-                    //{
-                    //    prop.SetValue(obj, new ISODateTime((string)row[prop.Name]));
-                    //}
-                    //else if (prop.PropertyType == typeof(Min3Max4Text))
-                    //{
-                    //    prop.SetValue(obj, new Min3Max4Text((string)row[prop.Name]));
-                    //}
-                    //else if (prop.PropertyType == typeof(OBActiveCurrencyAndAmount_SimpleType))
-                    //{
-                    //    prop.SetValue(obj, new OBActiveCurrencyAndAmount_SimpleType((string)row[prop.Name]));
-                    //}
-                    // if none of the above, it's an enum
                     if (Nullable.GetUnderlyingType(prop.PropertyType) == null)
                     {
                         var type = prop.PropertyType;
@@ -253,6 +219,21 @@ namespace ModelBank.Library
                 var account = GetOBAccount6(id.ToString());
                 data.Account.Add(account);
                 return new OBReadAccount6() { Data = data };
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No data " + e.Message);
+            }
+        }
+
+        public static OBReadBalance1 GetBalance(int id)
+        {
+            try
+            {
+                var data = new OBReadDataBalance1();
+                var balance = GetOBCashBalance1(id.ToString());
+                data.Balance.Add(balance);
+                return new OBReadBalance1() { Data = data };
             }
             catch (Exception e)
             {

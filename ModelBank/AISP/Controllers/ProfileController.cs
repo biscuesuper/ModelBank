@@ -33,13 +33,6 @@ namespace AISP.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult GetAccounts()
-        {
-            var result = Requests.GetAccounts().Result;
-            _resultsView = JsonConvert.SerializeObject(result);
-            return RedirectToAction("Index");
-        }
-
         public IActionResult GetAccountBalance()
         {
             var result = Requests.GetAccountBalance().Result;
@@ -54,25 +47,5 @@ namespace AISP.Controllers
             return RedirectToAction("Index");
         }
 
-        //public IActionResult PostAccessConsents()
-        //{
-        //    var result = Requests.PostAccessConsents().Result;
-        //    _resultsView = JsonConvert.SerializeObject(result);
-        //    return Index();
-        //}
-
-        //public IActionResult GetAccessConsents()
-        //{
-        //    var result = Requests.GetAccessConsents().Result;
-        //    _resultsView = JsonConvert.SerializeObject(result);
-        //    return Index();
-        //}
-
-        //public IActionResult DeleteAccessConsents()
-        //{
-        //    var result = Requests.DeleteAccessConsent();
-        //    _resultsView = result;
-        //    return Index();
-        //}
     }
 }

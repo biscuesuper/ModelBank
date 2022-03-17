@@ -21,15 +21,9 @@ namespace AISP.Models
             return response.IsSuccessStatusCode ? response.Content.ReadAsAsync<OBReadAccount6>() : null;
         }
 
-        public static Task<OBReadAccount6>? GetAccounts()
-        {
-            HttpResponseMessage response = _client.GetAsync(url + "/").Result;
-            return response.IsSuccessStatusCode ? response.Content.ReadAsAsync<OBReadAccount6>() : null;
-        }
-
         public static Task<OBReadBalance1>? GetAccountBalance()
         {
-            HttpResponseMessage response = _client.GetAsync(url + $"/{testAccId}/balance").Result;
+            HttpResponseMessage response = _client.GetAsync(url + $"/{testAccId}/balances").Result;
             return response.IsSuccessStatusCode ? response.Content.ReadAsAsync<OBReadBalance1>() : null;
         }
 
@@ -49,14 +43,6 @@ namespace AISP.Models
         {
             HttpResponseMessage response = _client.GetAsync(urlbase + $"/account-access-consents/{consentId}").Result;
             return response.IsSuccessStatusCode ? response.Content.ReadAsAsync<OBReadConsentResponse1>() : null;
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    var a = response.Content.ReadAsAsync<OBReadConsentResponse1>().Result;
-            //    var status = a.Data.Status;
-            //    _resultsView = status.ToString();
-            //    //_resultsView = JsonConvert.SerializeObject(a);
-            //    _consentResponse = a;
-            //}
         }
         public static string DeleteAccessConsents(string consentId)
         {
