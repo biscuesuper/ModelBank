@@ -1,16 +1,17 @@
 USE [ASPSP]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetOBTransaction6]    Script Date: 16/03/2022 08:46:48 ******/
+/****** Object:  StoredProcedure [dbo].[GetOBTransaction6]    Script Date: 16/03/2022 11:15:55 ******/
 DROP PROCEDURE [dbo].[GetOBTransaction6]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetOBTransaction6]    Script Date: 16/03/2022 08:46:48 ******/
+/****** Object:  StoredProcedure [dbo].[GetOBTransaction6]    Script Date: 16/03/2022 11:15:55 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 
 -- =============================================
@@ -28,7 +29,7 @@ BEGIN
 
     SELECT *
   FROM [dbo].[OBTransaction6]
-  WHERE [TransactionId] = @Id
+  WHERE [AccountId] = @Id
 END
 GO
 

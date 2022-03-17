@@ -1,16 +1,17 @@
 USE [ASPSP]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetOBCashBalance1]    Script Date: 16/03/2022 08:24:31 ******/
+/****** Object:  StoredProcedure [dbo].[GetOBCashBalance1]    Script Date: 16/03/2022 11:36:39 ******/
 DROP PROCEDURE [dbo].[GetOBCashBalance1]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetOBCashBalance1]    Script Date: 16/03/2022 08:24:31 ******/
+/****** Object:  StoredProcedure [dbo].[GetOBCashBalance1]    Script Date: 16/03/2022 11:36:39 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 -- =============================================
 -- Author:		<Author,,Name>
@@ -27,7 +28,7 @@ BEGIN
 
     SELECT *
   FROM [dbo].[OBCashBalance1]
-  WHERE [Id] = @Id
+  WHERE [AccountId] = @Id
 END
 GO
 
