@@ -65,3 +65,25 @@ namespace AISP.Controllers
         //    return Index();
         //}
 
+        //public IActionResult PostAccessConsents()
+        //{
+        //    var result = Requests.PostAccessConsents().Result;
+        //    _resultsView = JsonConvert.SerializeObject(result);
+        //    return Index();
+        //}
+
+        //public IActionResult GetAccessConsents()
+        //{
+        //    var result = Requests.GetAccessConsents().Result;
+        //    _resultsView = JsonConvert.SerializeObject(result);
+        //    return Index();
+        //}
+
+        //public IActionResult DeleteAccessConsents()
+        //{
+        //    var result = Requests.DeleteAccessConsent();
+        //    _resultsView = result;
+        //    return Index();
+        //}
+    }
+}

@@ -38,3 +38,30 @@ namespace AISP.Models
             HttpResponseMessage response = _client.GetAsync(url + $"/{testAccId}/transactions").Result;
             return response.IsSuccessStatusCode ? response.Content.ReadAsAsync<OBReadTransaction6>() : null;
         }
+
+        public static Task<OBReadConsentResponse1>? PostAccessConsent(OBReadConsent1 consent)
+        {
+            HttpResponseMessage response = _client.PostAsJsonAsync(urlbase + $"/account-access-consents", consent).Result;
+            return response.IsSuccessStatusCode ? response.Content.ReadAsAsync<OBReadConsentResponse1>() : null;
+        }
+
+        public static Task<OBReadConsentResponse1>? GetAccessConsent(string consentId)
+        {
+            HttpResponseMessage response = _client.GetAsync(urlbase + $"/account-access-consents/{consentId}").Result;
+            return response.IsSuccessStatusCode ? response.Content.ReadAsAsync<OBReadConsentResponse1>() : null;
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    var a = response.Content.ReadAsAsync<OBReadConsentResponse1>().Result;
+            //    var status = a.Data.Status;
+            //    _resultsView = status.ToString();
+            //    //_resultsView = JsonConvert.SerializeObject(a);
+            //    _consentResponse = a;
+            //}
+        }
+        public static string DeleteAccessConsents(string consentId)
+        {
+            HttpResponseMessage response = _client.DeleteAsync(urlbase + $"/account-access-consents/{consentId}").Result;
+            return response.StatusCode.ToString();
+        }
+    }
+}

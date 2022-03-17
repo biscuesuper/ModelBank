@@ -32,6 +32,19 @@ namespace AISP.Models
             }
             return null;
         }
+
+
+        public static OBReadConsent1 CreateTestConsent()
+        {
+            var consent = new OBReadConsent1();
+            consent.Data = new OBReadData1();
+            consent.Data.Permissions = new List<string>();
+            consent.Data.Permissions.Add(OBExternalPermissions1Code.ReadAccountsBasic.ToString());
+            consent.Data.ExpirationDateTime = "2017-05-02T00:00:00+00:00";
+            consent.Data.TransactionFromDateTime = "2017-05-03T00:00:00+00:00";
+            consent.Data.TransactionToDateTime = "2017-12-03T00:00:00+00:00";
+            consent.Risk = new OBRisk2();
+            return consent;
         }
     }
 }

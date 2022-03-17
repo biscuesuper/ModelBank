@@ -109,6 +109,11 @@ namespace ModelBank.Library
             return ExecuteProc<ProprietaryBankTransactionCodeStructure1>($"exec [dbo].[GetProprietaryBankTransactionCodeStructure1] {id}");
         }
 
+        public static OBReadDataConsentResponse1 GetOBReadDataConsentResponse1(string id)
+        {
+            return ExecuteProc<OBReadDataConsentResponse1>($"exec [dbo].[GetOBReadDataConsentResponse1] {id}");
+        }
+
         public static T ExecuteProc<T>(string command) where T : new()
         {
             T res = new T();
@@ -243,8 +248,17 @@ namespace ModelBank.Library
 
         public static OBReadConsentResponse1 GetConsentResponse(string id)
         {
-            var result = TempCache.Consents.Where(x => x.Data.ConsentId == id).Select(x => x).FirstOrDefault();
-            return result;
+            try
+            {
+                var data = GetOBReadDataConsentResponse1(id.ToString());
+                return new OBReadConsentResponse1() { Data = data };
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No data " + e.Message);
+            }
+            //var result = TempCache.Consents.Where(x => x.Data.ConsentId == id).Select(x => x).FirstOrDefault();
+            //return result;
         }
 
         public static void UserConsentResponse(string id)
