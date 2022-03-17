@@ -20,7 +20,7 @@ namespace AISP.Controllers
 
         private static HttpClient _client = new HttpClient();
 
-        private int testAccId = 1;
+        private string testAccId = "22289";
 
         private static OBReadConsentResponse1 _consentResponse;
 
@@ -95,7 +95,7 @@ namespace AISP.Controllers
             HttpResponseMessage response = _client.GetAsync(url + $"/{testAccId}/transactions").Result;
             if (response.IsSuccessStatusCode)
             {
-                var a = response.Content.ReadAsAsync<List<OBReadTransaction6>>().Result;
+                var a = response.Content.ReadAsAsync<OBReadTransaction6>().Result;
                 //_resultsView = a.ToString();
                 _resultsView = JsonConvert.SerializeObject(a);
             }

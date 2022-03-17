@@ -12,7 +12,13 @@ namespace ModelBank.Library
 
         public static OBAccount6 GetOBAccount6(string AccountId)
         {
-            return ExecuteProc<OBAccount6>($"exec [dbo].[GetOBAccount6] {AccountId}");
+            var account = ExecuteProc<OBAccount6>($"exec [dbo].[GetOBAccount6] {AccountId}");
+
+            var accaccount = GetOBCashAccount5(AccountId);
+            if(accaccount != null) account.Account.Add(accaccount);
+
+            //var servicer = GetOBBranchAndFinancialInstitutionIdentification5(account.ServicerId);
+            return account;
         }
 
         public static OBActiveOrHistoricCurrencyAndAmount GetOBActiveOrHistoricCurrencyAndAmount(string id)
@@ -47,7 +53,18 @@ namespace ModelBank.Library
 
         public static OBCashBalance1 GetOBCashBalance1(string id)
         {
-            return ExecuteProc<OBCashBalance1>($"exec [dbo].[GetOBCashBalance1] {id}");
+            var balance = ExecuteProc<OBCashBalance1>($"exec [dbo].[GetOBCashBalance1] {id}");
+            // add amount
+            // add credit line
+
+            return balance;
+        }
+
+        public static OBCreditLine1 GetOBCreditLine1(string id)
+        {
+            var creditLine = ExecuteProc<OBCreditLine1>($"exec [dbo].[GetOBCreditLine1] {id}");
+            // add amount
+            return creditLine;
         }
 
         public static OBCurrencyExchange5 GetOBCurrencyExchange5(string id)
@@ -72,7 +89,9 @@ namespace ModelBank.Library
 
         public static OBTransaction6 GetOBTransaction6(string id)
         {
-            return ExecuteProc<OBTransaction6>($"exec [dbo].[GetOBTransaction6] {id}");
+            var txn = ExecuteProc<OBTransaction6>($"exec [dbo].[GetOBTransaction6] {id}");
+            // add a bunch of things
+            return txn;
         }
 
         public static OBTransactionCardInstrument1 GetOBTransactionCardInstrument1(string id)
@@ -122,47 +141,55 @@ namespace ModelBank.Library
                 }
                 catch (ArgumentException)
                 {
-                    if (prop.PropertyType == typeof(ActiveOrHistoricCurrencyCode))
-                    {
-                        prop.SetValue(obj, new ActiveOrHistoricCurrencyCode((string)row[prop.Name]));
-                    }
-                    else if (prop.PropertyType == typeof(CountryCode))
-                    {
-                        prop.SetValue(obj, new CountryCode((string)row[prop.Name]));
-                    }
-                    else if (prop.PropertyType == typeof(ExternalBankTransactionFamily1Code))
-                    {
-                        prop.SetValue(obj, new ExternalBankTransactionFamily1Code((string)row[prop.Name]));
-                    }
-                    else if (prop.PropertyType == typeof(ExternalBankTransactionSubFamily1Code))
-                    {
-                        prop.SetValue(obj, new ExternalBankTransactionSubFamily1Code((string)row[prop.Name]));
-                    }
-                    else if (prop.PropertyType == typeof(ISODate))
-                    {
-                        prop.SetValue(obj, new ISODate((string)row[prop.Name]));
-                    }
-                    else if (prop.PropertyType == typeof(ISODateTime))
-                    {
-                        prop.SetValue(obj, new ISODateTime((string)row[prop.Name]));
-                    }
-                    else if (prop.PropertyType == typeof(Min3Max4Text))
-                    {
-                        prop.SetValue(obj, new Min3Max4Text((string)row[prop.Name]));
-                    }
-                    else if (prop.PropertyType == typeof(OBActiveCurrencyAndAmount_SimpleType))
-                    {
-                        prop.SetValue(obj, new OBActiveCurrencyAndAmount_SimpleType((string)row[prop.Name]));
-                    }
+                    // Legacy for ISO types
+                    //if (prop.PropertyType == typeof(ActiveOrHistoricCurrencyCode))
+                    //{
+                    //    prop.SetValue(obj, new ActiveOrHistoricCurrencyCode((string)row[prop.Name]));
+                    //}
+                    //else if (prop.PropertyType == typeof(CountryCode))
+                    //{
+                    //    prop.SetValue(obj, new CountryCode((string)row[prop.Name]));
+                    //}
+                    //else if (prop.PropertyType == typeof(ExternalBankTransactionFamily1Code))
+                    //{
+                    //    prop.SetValue(obj, new ExternalBankTransactionFamily1Code((string)row[prop.Name]));
+                    //}
+                    //else if (prop.PropertyType == typeof(ExternalBankTransactionSubFamily1Code))
+                    //{
+                    //    prop.SetValue(obj, new ExternalBankTransactionSubFamily1Code((string)row[prop.Name]));
+                    //}
+                    //else if (prop.PropertyType == typeof(ISODate))
+                    //{
+                    //    prop.SetValue(obj, new ISODate((string)row[prop.Name]));
+                    //}
+                    //else if (prop.PropertyType == typeof(ISODateTime))
+                    //{
+                    //    prop.SetValue(obj, new ISODateTime((string)row[prop.Name]));
+                    //}
+                    //else if (prop.PropertyType == typeof(Min3Max4Text))
+                    //{
+                    //    prop.SetValue(obj, new Min3Max4Text((string)row[prop.Name]));
+                    //}
+                    //else if (prop.PropertyType == typeof(OBActiveCurrencyAndAmount_SimpleType))
+                    //{
+                    //    prop.SetValue(obj, new OBActiveCurrencyAndAmount_SimpleType((string)row[prop.Name]));
+                    //}
                     // if none of the above, it's an enum
-                    else if (Nullable.GetUnderlyingType(prop.PropertyType) == null)
+                    if (Nullable.GetUnderlyingType(prop.PropertyType) == null)
                     {
-                        prop.SetValue(obj, Enum.Parse(prop.PropertyType, (string)row[prop.Name]));
+                        var type = prop.PropertyType;
+                        // either a date
+                        if (type == typeof(DateTime)) prop.SetValue(obj, DateTime.Parse((string)row[prop.Name]));
+                        // or an enum
+                        else prop.SetValue(obj, Enum.Parse(type, (string)row[prop.Name]));
                     }
-                    else if (Nullable.GetUnderlyingType(prop.PropertyType) != null) // if it's nullable, then it has an underlying enum type
+                    else if (Nullable.GetUnderlyingType(prop.PropertyType) != null)
                     {
-                        var enumType = Nullable.GetUnderlyingType(prop.PropertyType);
-                        if (enumType != null) prop.SetValue(obj, Enum.Parse(enumType, (string)row[prop.Name]));
+                        var type = Nullable.GetUnderlyingType(prop.PropertyType);
+                        // either a date
+                        if (type == typeof(DateTime)) prop.SetValue(obj, DateTime.Parse((string)row[prop.Name]));
+                        // or an enum
+                        else if (type != null) prop.SetValue(obj, Enum.Parse(type, (string)row[prop.Name]));
                         else throw;
                     }
                     else
@@ -176,12 +203,12 @@ namespace ModelBank.Library
 
 
 
-        public static OBReadAccount6 GetAccountAsync(int id)
+        public static OBReadAccount6 GetAccount(int id)
         {
             try
             {
-                var account = GetOBAccount6(id.ToString());//GetDbAccountAsync(id);
                 var data = new OBReadDataAccount5();
+                var account = GetOBAccount6(id.ToString());
                 data.Account.Add(account);
                 return new OBReadAccount6() { Data = data };
             }
@@ -191,42 +218,21 @@ namespace ModelBank.Library
             }
         }
 
-        //private static OBAccount6 GetDbAccountAsync(int id)
-        //{
-        //    var res = new OBAccount6();
+        public static OBReadTransaction6 GetTransaction(int id)
+        {
+            try
+            {
+                var data = new OBReadDataTransaction6();
+                var txn = GetOBTransaction6(id.ToString());
+                data.Transaction.Add(txn);
+                return new OBReadTransaction6() { Data = data };
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No data " + e.Message);
+            }
+        }
 
-        //    DataTable dt = new DataTable();
-        //    using (var con = new SqlConnection(connStr))
-        //    using (var cmd = new SqlCommand(" SELECT *" +
-        //                                    " FROM [dbo].[OBAccount6] " +
-        //                                    " WHERE [AccountId] = @id",
-        //                                    con))
-        //    {
-        //        cmd.Parameters.Add(new SqlParameter("@id", id));
-
-        //        con.Open();
-        //        dt.Load(cmd.ExecuteReader());
-
-        //        if (dt.Rows.Count > 0 && !dt.Rows[0].IsNull(0))
-        //        {
-        //            var row = dt.Rows[0];
-        //            if(row["AccountId"] != null) res.AccountId = (string)row["AccountId"];
-        //            if (row["AccountSubType"] != null) res.AccountSubType = Enum.Parse<OBExternalAccountSubType1Code>(row["AccountSubType"].ToString());
-        //            if (row["AccountType"] != null) res.AccountType = Enum.Parse<OBExternalAccountType1Code>(row["AccountType"].ToString());
-        //            if (row["Currency"] != null) res.Currency = row["Currency"].ToString();
-        //            if (row["Description"] != null) res.Description = row["Description"].ToString();
-        //            if (row["MaturityDate"] != null) res.MaturityDate = row["MaturityDate"].ToString();
-        //            if (row["Nickname"] != null) res.Nickname = row["Nickname"].ToString();
-        //            if (row["OpeningDate"] != null) res.OpeningDate = row["OpeningDate"].ToString();
-        //            if (row["Status"] != null) res.Status = Enum.Parse<OBAccountStatus1Code>(row["Status"].ToString());
-        //            if (row["StatusUpdateDateTime"] != null) res.StatusUpdateDateTime = row["StatusUpdateDateTime"].ToString();
-        //            //if (row["SwitchStatus"] != null) res.SwitchStatus = Enum.Parse<OBExternalSwitchStatusCode>(row["SwitchStatus"].ToString());
-        //        }
-        //    }
-        //    var accs = GetDbCashAccountsAsync(id);
-        //    if (accs.Count() > 0) res.Account = accs;
-        //    return res;
-        //}
 
         public static OBReadConsentResponse1 CreateConsentResponse(OBReadConsent1 consent)
         {
@@ -256,124 +262,6 @@ namespace ModelBank.Library
             var result = TempCache.Consents.RemoveAll(x => x.Data.ConsentId == id);
         }
 
-        //private static ICollection<OBCashAccount5> GetDbCashAccountsAsync(int id)
-        //{
-        //    var res = new List<OBCashAccount5>();
-
-        //    DataTable dt = new DataTable();
-        //    using (var con = new SqlConnection(connStr))
-        //    using (var cmd = new SqlCommand(" SELECT *" +
-        //                                    " FROM [dbo].[OBCashAccount5] " +
-        //                                    " WHERE [AccountId] = @id",
-        //                                    con))
-        //    {
-        //        cmd.Parameters.Add(new SqlParameter("@id", id));
-
-        //        con.Open();
-        //        dt.Load(cmd.ExecuteReader());
-
-        //        if (dt.Rows.Count > 0 && !dt.Rows[0].IsNull(0))
-        //        {
-        //            for (var index = 0; index < dt.Rows.Count; index++)
-        //            {
-        //                var row = dt.Rows[index];
-        //                var acc = new OBCashAccount5();
-        //                if (row["Identification"] != null) acc.Identification = row["Identification"].ToString();
-        //                if (row["Name"] != null) acc.Name = row["Name"].ToString();
-        //                //if (row["SchemeName"] != null) acc.SchemeName = Enum.Parse<OBExternalAccountIdentification4Code>(row["SchemeName"].ToString());
-        //                if (row["SecondaryIdentification"] != null) acc.SecondaryIdentification = row["SecondaryIdentification"].ToString();
-        //                res.Add(acc);
-        //            }
-        //        }
-        //    }
-        //    return res;
-        //}
-
-        ////internal async static Task<decimal?> GetAccountBalancesAsync(int id)
-        ////{
-        ////    var res = Db.GetAccountAsync((int)id).Result;
-        ////    var acc = res;
-        ////    return res.Balance;
-        ////}
-
-        //public async static Task<OBReadAccount6> GetAccountsAsync()
-        //{
-        //    try
-        //    {
-        //        //List<Account> accounts = new List<Account>();
-        //        //using (var conn = new SqlConnection(connStr))
-        //        //using (var cmd = new SqlCommand("[dbo].[GetAccounts]", conn) { CommandType = CommandType.StoredProcedure })
-        //        //{
-        //        //    conn.Open();
-        //        //    SqlDataReader dr = await cmd.ExecuteReaderAsync();
-        //        //    if (dr != null && dr.HasRows)
-        //        //    {
-        //        //        while (await dr.ReadAsync())
-        //        //        {
-        //        //            Account account = new Account();
-        //        //            account.Id = Convert.ToInt32(dr["Id"].ToString());
-        //        //            account.UserId = Convert.ToInt32(dr["UserId"].ToString());
-        //        //            account.Balance = Convert.ToDecimal(dr["Balance"].ToString());
-        //        //            accounts.Add(account);
-        //        //        }
-        //        //    }
-        //        //    else
-        //        //    {
-        //        //        throw new Exception("No data.");
-        //        //    }
-        //        //}
-        //        //return accounts;
-        //        var jsn = "\"Account\": [{ \"AccountId\": \"22289\",\"Status\": \"Enabled\",\"StatusUpdateDateTime\": \"2019-01-01T06:06:06+00:00\", \"Currency\": \"GBP\",  "+
-        //        " \"AccountType\": \"Personal\", \"AccountSubType\": \"CurrentAccount\",\"Nickname\": \"Bills\",\"Account\": [ { \"SchemeName\": \"UK.OBIE.SortCodeAccountNumber\", " +
-        //  		" \"Identification\": \"80200110203345\", \"Name\": \"Mr Kevin\", \"SecondaryIdentification\": \"00021\" }] } ] } ";
-
-        //        var acc = Newtonsoft.Json.JsonConvert.DeserializeObject<OBAccount6>(jsn);
-        //        var data = new OBReadDataAccount5();
-        //        data.Account.Append(acc);
-        //        var res = new OBReadAccount6() { Data = data};
-        //        return res;
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw new Exception("No data " + e.Message);
-        //    }
-        //}
-
-        //public async static Task<IEnumerable<OBReadTransaction6>?> GetAccountTxnsAsync(int accountId)
-        //{
-        //    try
-        //    {
-        //        List<OBReadTransaction6> txns = new List<OBReadTransaction6>();
-        //        using (var conn = new SqlConnection(connStr))
-        //        using (var cmd = new SqlCommand("[dbo].[GetAccountTxns]", conn) { CommandType = CommandType.StoredProcedure })
-        //        {
-        //            cmd.Parameters.Add(new SqlParameter("@AccountId", accountId));
-        //            conn.Open();
-        //            SqlDataReader dr = await cmd.ExecuteReaderAsync();
-        //            if (dr != null && dr.HasRows)
-        //            {
-        //                while (await dr.ReadAsync())
-        //                {
-        //                    OBReadTransaction6 txn = new OBReadTransaction6();
-        //                    //txn.Id = Convert.ToInt32(dr["Id"].ToString());
-        //                    //txn.AccountId = Convert.ToInt32(dr["AccountId"].ToString());
-        //                    //txn.Amount = Convert.ToDecimal(dr["Amount"].ToString());
-        //                    //txn.Date = Convert.ToDateTime(dr["Date"].ToString());
-        //                    txns.Add(txn);
-        //                }
-        //            }
-        //            else
-        //            {
-        //                throw new Exception("No data.");
-        //            }
-        //        }
-        //        return txns.ToArray();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw new Exception("No data " + e.Message);
-        //    }
-        //}
+        
     }
 }

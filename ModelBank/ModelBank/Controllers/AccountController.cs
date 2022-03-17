@@ -29,7 +29,7 @@ namespace ModelBank.Controllers
         public OBReadAccount6 GetAccount(/*[FromHeader(Name = "Authorization")] string auth,*/ [FromRoute] int AccountId)
         {
             _logger.Log(LogLevel.Information, $"/{AccountId}");
-            var account = Db.GetAccountAsync(AccountId);
+            var account = Db.GetAccount(AccountId);
             return account;
         }
 
@@ -41,10 +41,11 @@ namespace ModelBank.Controllers
         }
 
         [HttpGet("{AccountId:int}/transactions", Name = "GetAccountTxns")]
-        public OBReadTransaction6 GetAccountTxns([FromHeader(Name = "Authorization")] string auth, [FromRoute] int AccountId)
+        public OBReadTransaction6 GetAccountTxns(/*[FromHeader(Name = "Authorization")] string auth,*/ [FromRoute] int AccountId)
         {
             _logger.Log(LogLevel.Information, $"/{AccountId}/transactions");
-            return new OBReadTransaction6();
+            var txn = Db.GetTransaction(AccountId);
+            return txn;
         }
 
     }
