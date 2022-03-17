@@ -1,0 +1,27 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    <h1>Hello, @ViewData["Name"]!</h1>
+    <h2>2. Select your bank</h2>
+    <a href=@ViewData["ModelBankUrl"] target="_blank">Model Bank</a>
+    <a asp-area="" asp-controller="Profile" asp-action="SelectedModelBank">Model Bank</a>
+
+
+
+    
+    <ul>
+        <li><a asp-area="" asp-controller="Home" asp-action="GetAccount">Get Account</a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="GetAccounts">Get Accounts</a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="GetAccountBalance">Get Account Balance</a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="GetAccountTxns">Get Account Txns</a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="PostAccessConsents">Post Access Consents</a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="GetAccessConsents">Get Access Consents</a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="DeleteAccessConsents">Delete Access Consents</a></li>
+    </ul>
+
+    <div id="ResultsView" style="height:400px; width:1200px; background-color:black; color: white; overflow-x:auto; overflow-y:auto">
+        <p>@ViewData["ResultsView"]</p>
+    </div>
+}

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ModelBank.Library;
-using ModelBank.Objects;
-using ModelBank.Resources.Objects;
+using OBData.Objects;
 
 namespace ModelBank.Controllers
 {
@@ -11,41 +10,42 @@ namespace ModelBank.Controllers
     [Route("/open-banking/v1/aisp/accounts")] //[Route("[controller]")]
     public class AccountController : Controller
     {
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(ILogger<WeatherForecastController> logger)
+        public AccountController(ILogger<AccountController> logger)
         {
             _logger = logger;
         }
 
         [HttpGet(Name = "GetAccounts")]
-        public Task<OBReadAccount6> GetAccounts([FromHeader(Name = "Authorization")] string auth)
+        public OBReadAccount6 GetAccounts([FromHeader(Name = "Authorization")] string auth)
         {
             _logger.Log(LogLevel.Information, $"/");
-            return Db.GetAccountsAsync();
+            return new OBReadAccount6();
         }
 
 
         [HttpGet("{AccountId:int}", Name = "GetAccount")]
-        public Task<Account?> GetAccount([FromHeader(Name = "Authorization")] string auth, [FromRoute] int AccountId)
+        public OBReadAccount6 GetAccount(/*[FromHeader(Name = "Authorization")] string auth,*/ [FromRoute] int AccountId)
         {
             _logger.Log(LogLevel.Information, $"/{AccountId}");
-            return Db.GetAccountAsync(AccountId);
+            var account = Db.GetAccount(AccountId);
+            return account;
         }
 
         [HttpGet("{AccountId:int}/balances", Name = "GetAccountBalances")]
-        public Task<decimal?> GetAccountBalances([FromHeader(Name = "Authorization")] string auth, [FromRoute] int AccountId)
+        public OBReadBalance1 GetAccountBalances([FromHeader(Name = "Authorization")] string auth, [FromRoute] int AccountId)
         {
             _logger.Log(LogLevel.Information, $"/{AccountId}/balances");
-            return Db.GetAccountBalancesAsync(AccountId);
+            return new OBReadBalance1();
         }
 
         [HttpGet("{AccountId:int}/transactions", Name = "GetAccountTxns")]
-        public Task<IEnumerable<Txn>?> GetAccountTxns([FromHeader(Name = "Authorization")] string auth, [FromRoute] int AccountId)
+        public OBReadTransaction6 GetAccountTxns(/*[FromHeader(Name = "Authorization")] string auth,*/ [FromRoute] int AccountId)
         {
             _logger.Log(LogLevel.Information, $"/{AccountId}/transactions");
-            return Db.GetAccountTxnsAsync(AccountId);
-           
+            var txn = Db.GetTransaction(AccountId);
+            return txn;
         }
 
     }

@@ -1,12 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ModelBank.Resources.Objects;
+﻿//using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OBData.Objects;
 
 namespace ModelBank.Resources.Tests
 {
-    [TestClass]
-    public class Serialisation
+    //[TestClass]
+    public static class Serialisation
     {
-        public void TestJsonToObj()
+        public static void TestJsonToObj()
         {
             var jsn = "{\"AccountId\":\"22289\",\"Status\":\"Enabled\",\"StatusUpdateDateTime\":\"2019-01-01T06:06:06+00:00\",\"Currency\":\"GBP\",\"AccountType\":\"Personal\",\"AccountSubType\":\"CurrentAccount\",\"Nickname\":\"Bills\",\"Account\":[{\"SchemeName\":\"UK.OBIE.SortCodeAccountNumber\",\"Identification\":\"80200110203345\",\"Name\":\"Mr Kevin\",\"SecondaryIdentification\":\"00021\"}]}";
 
@@ -14,11 +14,13 @@ namespace ModelBank.Resources.Tests
             var data = new OBReadDataAccount5();
         }
 
-        [TestMethod]
-        public void ReadXML()
+        //[TestMethod]
+        public static void ReadXML()
         {
             // First write something so that there is something to read ...  
-            var b = new OBAccount6 { AccountId = (Max40Text)"222", Description = (Max35Text)"aaaa"};
+            var b = new OBAccount6 {
+                AccountId = "22289"
+            };
             var writer = new System.Xml.Serialization.XmlSerializer(typeof(OBAccount6));
             var wfile = new System.IO.StreamWriter(@"c:\temp\SerializationOverview.xml");
             writer.Serialize(wfile, b);
