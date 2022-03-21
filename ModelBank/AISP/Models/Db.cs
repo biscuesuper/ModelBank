@@ -7,7 +7,10 @@ namespace AISP.Models
 {
     public class Db
     {
+        
+
         private static SqlConnection con = new SqlConnection("Server = localhost; Database=AISP;Trusted_Connection=True;");
+
         public static Login LoginCheck(Login ad)
         {
             SqlCommand com = new SqlCommand("TryLogin", con);

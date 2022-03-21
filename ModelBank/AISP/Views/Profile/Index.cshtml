@@ -3,34 +3,90 @@
 *@
 
 @{
-    <h1>Hello, @ViewData["Name"]!</h1>
-    <a asp-area="" class="btn btn-primary btn-lg" asp-controller="Connect" asp-action="Index">Connect new account</a>
-    <br />
-    <br />
-    <section class="container-fluid" height="80%">
-        <div class="container-fluid overflow-auto">
-            <div class="row">
-                
-                <div class="row">
-                    <div class="col-4 text-center">
-                        <a asp-area="" class="btn btn-primary btn-lg" asp-controller="Profile" asp-action="GetAccount">Get Account</a>
-                    </div>
-                    <div class="col-4 text-center">
-                        <a asp-area="" class="btn btn-primary btn-lg" asp-controller="Profile" asp-action="GetAccountBalance">Get Account Balance</a>
-                    </div>
-                    <div class="col-4 text-center">
-                        <a asp-area="" class="btn btn-primary btn-lg" asp-controller="Profile" asp-action="GetAccountTxns">Get Account Txns</a>
-                    </div>
-                </div>
-
-                 <figure class="md-5">
-                    <blockquote class="blockquote" style="font-family: Arial, sans-serif;">
-                        <div id="ResultsView" class="bg-dark text-light text-left" style="padding:10px">
-                            @Html.Raw(ViewBag.JsonData)
-                        </div>
-                    </blockquote>
-                </figure>
+<div class="container-fluid">
+    <div class="row" style="height:95vh">
+            
+        <div class="steps col-4">
+            <div class="mb-5" style="font-family: 'Raleway', sans-serif; font-size:1.5em; padding:7vh;">
+                <span><h1>5 Easy steps for our customers</h1></span><br/>
+                <span>1.   Log into your Happy FinTech profile</span><br/>
+                <br/>
+                @if (ViewData["login"] != null)
+                {
+                    <span><b>2.a. Connect new bank account</b></span><br/>
+                }
+                else
+                {
+                    <span>2.a. Connect new bank account</span><br/>
+                }
+                <span>2.b. Select your bank</span><br/>
+                <span>2.c. Consent</span><br/>
+                <br/>
+                <span>3.a. Navigate to your bank's login page</span><br/>
+                <span>3.b. Log into your bank account</span><br/>
+                <br/>
+                <span>4.a. Go back to Happy FinTech</span><br/>
+                <span>4.b. Test your connection</span><br/>
+                <br/>
+                @if (ViewData["datah"] != null)
+                {
+                    <span><b>5.   View your bank data on Happy Fintech</b></span><br/>
+                }
+                else
+                {
+                    <span>5.   View your bank data on Happy Fintech</span><br/>
+                }
+                    
             </div>
         </div>
-    </section>
+        <div class="fintech col-8">
+            <br /><br />
+            <div class="text-center mb-5">
+                <h1 class="display-4">Happy FinTech</h1>
+
+                <!-- Page -->
+                <h1>Hello, @ViewData["Name"]!</h1>
+                    
+                <br />
+                <br />
+                <section class="container-fluid" height="80%">
+                    <div class="container-fluid overflow-auto">
+                        <div class="row" style="padding:10px">
+                
+                            <div class="col-3 text-center">
+                                 <div class="text-center"><a asp-area="" class="btn btn-primary btn-lg" style="width:100%" asp-controller="Connect" asp-action="Index">Connect new account</a></div>
+                                <br/>
+                                
+                                @if (ViewData["login"] == null)
+                                {
+                                    <div class="text-center"><a asp-area="" class="btn btn-primary btn-lg" style="width:100%" asp-controller="Profile" asp-action="GetAccount">Get Account</a></div>
+                                    <br/>
+                                    <div class="text-center"><a asp-area="" class="btn btn-primary btn-lg" style="width:100%" asp-controller="Profile" asp-action="GetAccountBalance">Get Account Balance</a></div>
+                                    <br/>
+                                    <div class="text-center"><a asp-area="" class="btn btn-primary btn-lg" style="width:100%" asp-controller="Profile" asp-action="GetAccountTxns">Get Account Txns</a></div>
+                            
+                                }
+                                </div>
+                            <div class="col-9 text-left">
+                                <figure class="md-5">
+                                    <blockquote class="blockquote" style="font-family: Arial, sans-serif; font-size:1em;">
+                                        <div id="ResultsView" class="bg-dark text-light" style="text-align:left">
+                                            @Html.Raw(ViewBag.JsonData)
+                                        </div>
+                                    </blockquote>
+                                </figure>
+                            </div>
+                                
+                        </div>
+                    </div>
+                </section>
+                <!-- End Page -->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+   
 }

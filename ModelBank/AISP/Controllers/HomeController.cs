@@ -12,9 +12,6 @@ namespace AISP.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private string _resultsView= "";
-
-
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -22,10 +19,6 @@ namespace AISP.Controllers
 
         public IActionResult Index()
         {
-            if (!string.IsNullOrEmpty(_resultsView))
-            {
-                ViewData["ResultsView"] = _resultsView;
-            }
             return View("Index");
         }
 

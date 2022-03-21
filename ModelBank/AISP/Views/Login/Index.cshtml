@@ -5,27 +5,68 @@
 @{
     ViewData["Title"] = "Login Page";
 }
-<div class="container">
-    <div class="row mt-5">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4">
-            <form class="form-horizontal" asp-action="Index">
-                <div class="form-group">
-                   <label class="control-label">Admin ID</label>
-                    <input asp-for="Username"  class="form-control"type="text" />
+
+<div class="container-fluid">
+        <div class="row" style="height:95vh">
+            
+            <div class="steps col-4">
+                <div class="mb-5" style="font-family: 'Raleway', sans-serif; font-size:1.5em; padding:7vh;">
+                    <span><h1>5 Easy steps for our customers</h1></span><br/>
+                    <span><b>1.   Log into your Happy FinTech profile</b></span><br/>
+                    <br/>
+
+                    <span>2.a. Connect new bank account</span><br/>
+                    <span>2.b. Select your bank</span><br/>
+                    <span>2.c. Consent</span><br/>
+                    <br/>
+                    <span>3.a. Navigate to your bank's login page</span><br/>
+                    <span>3.b. Log into your bank account</span><br/>
+                    <br/>
+                    <span>4.a. Go back to Happy FinTech</span><br/>
+                    <span>4.b. Test your connection</span><br/>
+                    <br/>
+                    <span>5.   View your bank data on Happy Fintech</span><br/>
+                    
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Password</label>
-                    <input asp-for="Password" class="form-control" type="password" />
+            </div>
+            <div class="fintech col-8">
+                <br /><br />
+                <div class="text-center mb-5">
+                    <h1 class="display-4">Happy FinTech</h1>
+
+                    <!-- Page -->
+                     <div class="container">
+
+                        <div class="row mt-5">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4">
+                                <form class="form-horizontal" asp-action="Index">
+                                    <div class="form-group">
+                                       <label class="control-label">Admin ID</label>
+                                        <input asp-for="Username"  class="form-control"type="text" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Password</label>
+                                        <input asp-for="Password" class="form-control" type="password" />
+                                    </div>
+                                    <div class="form-group">
+                                       <input type="submit" value="Submit" />
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                   </div>
+
+                    <!-- End Page -->
                 </div>
-                <div class="form-group">
-                   <input type="submit" value="Submit" />
-                </div>
-            </form>
+            </div>
+
         </div>
-        <div class="col-sm-4"></div>
-    </div>
 </div>
+
+           
+      
 @{
     if (TempData["msg"]!=null)
     {

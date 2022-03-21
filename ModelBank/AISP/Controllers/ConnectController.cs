@@ -11,7 +11,10 @@ namespace AISP.Controllers
         public IActionResult Index()
         {
             if (!string.IsNullOrEmpty(_url))
+            {
                 ViewData["ModelBankUrl"] = _url;
+                _url = "";
+            }
             return View();
         }
 
