@@ -13,6 +13,8 @@ namespace ModelBank.Auth.Controllers
 
         private static HttpClient _client = new HttpClient();
 
+        private string redirectUrl = "https://localhost:7065/Connect/LinkAccount";
+
 
         public LoginController(ILogger<HomeController> logger)
         {
@@ -46,7 +48,7 @@ namespace ModelBank.Auth.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var a = response.Content.ReadAsAsync<OBReadConsentResponse1>().Result;
-                    return RedirectToAction("Success");
+                    return RedirectToAction("Success", new { consentId = consentId} );
                 }
                 else
                 {
@@ -58,8 +60,9 @@ namespace ModelBank.Auth.Controllers
             return View();
         }
 
-        public IActionResult Success()
+        public IActionResult Success(string consentId)
         {
+            HttpContext.Session.SetString("RedirectUrl", $"{redirectUrl}?consentId={consentId}");
             return View();
         }
 

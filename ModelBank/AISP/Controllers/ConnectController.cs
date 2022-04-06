@@ -6,7 +6,6 @@ namespace AISP.Controllers
     public class ConnectController : Controller
     {
         private string modelBankUrl = "https://localhost:7073/Login/LoginConsent";
-        private string _consentId = "";
         public IActionResult Index()
         {
             return View();
@@ -19,16 +18,14 @@ namespace AISP.Controllers
             var consentId = consentResponse?.Data.ConsentId;
             if (consentId == null) return RedirectToAction("Index");
             HttpContext.Session.SetString("ConsentId", consentId);
-            _consentId = consentId;
+            TempData["consentID"] = consentId;
             HttpContext.Session.SetString("AuthServUrl", $"{modelBankUrl}?consentId={consentId}");
             HttpContext.Session.SetString("RedirectLinkAvail", "true");
             return RedirectToAction("Index");
         }
 
-        public IActionResult LinkAccount()
+        public IActionResult LinkAccount(string consentId)
         {
-            var consentId = HttpContext.Session.GetString("ConsentId");
-            if (consentId == null) consentId = _consentId; // temp fix for session loss over new window redirect
             var consent = Requests.GetAccessConsent(consentId)?.Result;
             HttpContext.Session.Remove("RedirectLinkAvail");
             if (consent?.Data.Status == OBData.Enums.OBExternalRequestStatus1Code.Authorised)
