@@ -14,8 +14,9 @@ namespace AISP.Controllers
         public IActionResult SelectedModelBank()
         {
             var consent = Db.CreateTestConsent();
-            var consentResponse = Requests.PostAccessConsent(consent).Result;
-            var consentId = consentResponse.Data.ConsentId;
+            var consentResponse = Requests.PostAccessConsent(consent)?.Result;
+            var consentId = consentResponse?.Data.ConsentId;
+            if (consentId == null) return RedirectToAction("Index");
             HttpContext.Session.SetString("ConsentId", consentId);
             HttpContext.Session.SetString("AuthServUrl", $"{modelBankUrl}?consentId={consentId}");
             HttpContext.Session.SetString("RedirectLinkAvail", "true");
