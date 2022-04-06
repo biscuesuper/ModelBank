@@ -18,6 +18,7 @@ namespace AISP.Controllers
             var consentId = consentResponse.Data.ConsentId;
             HttpContext.Session.SetString("ConsentId", consentId);
             HttpContext.Session.SetString("AuthServUrl", $"{modelBankUrl}?consentId={consentId}");
+            HttpContext.Session.SetString("RedirectLinkAvail", "true");
             return RedirectToAction("Index");
         }
 
@@ -25,6 +26,7 @@ namespace AISP.Controllers
         {
             var consentId = HttpContext.Session.GetString("ConsentId");
             var consent = Requests.GetAccessConsent(consentId)?.Result;
+            HttpContext.Session.Remove("RedirectLinkAvail");
             if (consent?.Data.Status == OBData.Enums.OBExternalRequestStatus1Code.Authorised)
             {
                 return RedirectToAction("Index", "Profile");

@@ -13,7 +13,7 @@
                 <br/>
                 @if (Context.Session.TryGetValue("IsUserLoggedIn", out var a))
                 {
-                    <span><b>2.a. Connect new bank account bfkdlanfkidrsja</b></span><br/>
+                    <span><b>2.a. Connect new bank account</b></span><br/>
                 }
                 else
                 {
@@ -22,10 +22,22 @@
                 <span>2.b. Select your bank</span><br/>
                 <span>2.c. Consent</span><br/>
                 <br/>
-                <span>3.a. Navigate to your bank's login page</span><br/>
-                <span>3.b. Log into your bank account</span><br/>
-                <br/>
-                <span>4.a. Go back to Happy FinTech</span><br/>
+                @if(Context.Session.TryGetValue("RedirectLinkAvail", out var e))
+                { 
+                    <span style="font-weight:bold">
+                    <span>3.a. Navigate to your bank's login page</span><br/>
+                    <span>3.b. Log into your bank account</span><br/>
+                    <br/>
+                    <span>4.a. Go back to Happy FinTech</span><br/>
+                    </span>
+                }
+                else{
+                    <span>3.a. Navigate to your bank's login page</span><br/>
+                    <span>3.b. Log into your bank account</span><br/>
+                    <br/>
+                    <span>4.a. Go back to Happy FinTech</span><br/>
+                }
+                
                 <span>4.b. Test your connection</span><br/>
                 <br/>
                 @if (Context.Session.TryGetValue("DisplayData", out var b) || Context.Session.TryGetValue("HasConsent", out var c))
