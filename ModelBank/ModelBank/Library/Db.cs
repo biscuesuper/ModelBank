@@ -10,7 +10,7 @@ namespace ModelBank.Library
 {
     public static class Db
     {
-        private static string connStr = "Server=localhost;Database=ASPSP;Trusted_Connection=True;";
+        private static string connStr = "Server=model-bank-sql.database.windows.net;Database=ASPSP;User Id=admin-sa;Password=SQL-pass;"; // "Server=localhost;Database=ASPSP;Trusted_Connection=True;";
 
         public static OBAccount6 GetOBAccount6(string AccountId)
         {
