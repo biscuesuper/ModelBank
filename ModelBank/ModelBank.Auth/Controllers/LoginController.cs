@@ -13,7 +13,6 @@ namespace ModelBank.Auth.Controllers
 
         private static HttpClient _client = new HttpClient();
 
-        private static string _consentId = "";
 
         public LoginController(ILogger<HomeController> logger)
         {
@@ -27,7 +26,7 @@ namespace ModelBank.Auth.Controllers
 
         public IActionResult LoginConsent(string consentId)
         {
-            _consentId = consentId;
+            HttpContext.Session.SetString("ConsentId", consentId);
             return RedirectToAction("Login");
         }
 
@@ -42,7 +41,8 @@ namespace ModelBank.Auth.Controllers
             }
             else
             {
-                HttpResponseMessage response = _client.GetAsync(url + $"/account-access-consents/{_consentId}/user-consent/{res.AccountId}").Result;
+                var consentId = HttpContext.Session.GetString("ConsentId");
+                HttpResponseMessage response = _client.GetAsync(url + $"/account-access-consents/{consentId}/user-consent/{res.AccountId}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var a = response.Content.ReadAsAsync<OBReadConsentResponse1>().Result;
