@@ -7,61 +7,41 @@ namespace AISP.Controllers
 {
     public class ProfileController : Controller
     {
-        private static Login _user = new Login();
-        private static string _resultsView = "";
-        private static string _login = "";
-        private static string _datah = "";
-
-
-        public IActionResult Index()
+        public IActionResult Index(string? data)
         {
-            if (!string.IsNullOrEmpty(_user.Username))
-                ViewData["Name"] = _user.Username;
-            if (!string.IsNullOrEmpty(_resultsView))
-                ViewBag.JsonData = JValue.Parse(_resultsView).ToString(Formatting.Indented).Replace("\r\n", "<br/>");
-            if (!string.IsNullOrEmpty(_login))
-            {
-                ViewData["login"] = _login;
-                _login = "";
-            }
-            if (!string.IsNullOrEmpty(_datah))
-            {
-                ViewData["datah"] = _datah;
-                _datah = "";
-            }
+            if (HttpContext.Session.TryGetValue("DisplayData", out var a))
+                ViewBag.Data = JValue.Parse(data).ToString(Formatting.Indented).Replace("\r\n", "<br/>");
             return View();
         }
 
         public IActionResult LoginSuccess(int id, string username)
         {
-            _user.Id = id;
-            _user.Username = username;
-            _login = "yey";
+            HttpContext.Session.SetInt32("UserId", id);
+            HttpContext.Session.SetString("Username", username);
+            HttpContext.Session.SetString("IsUserLoggedIn", "true");
+        
             return RedirectToAction("Index");
         }
 
         public IActionResult GetAccount()
         {
-            _datah = "yey";
-            var result = Requests.GetAccount().Result;
-            _resultsView = JsonConvert.SerializeObject(result);
-            return RedirectToAction("Index");
+            HttpContext.Session.SetString("DisplayData", "true");
+            var result = Requests.GetAccount()?.Result;
+            return RedirectToAction("Index", new { data = JsonConvert.SerializeObject(result) });
         }
 
         public IActionResult GetAccountBalance()
         {
-            _datah = "yey";
-            var result = Requests.GetAccountBalance().Result;
-            _resultsView = JsonConvert.SerializeObject(result);
-            return RedirectToAction("Index");
+            HttpContext.Session.SetString("SessionData", "true");
+            var result = Requests.GetAccountBalance()?.Result;
+            return RedirectToAction("Index", new { data = JsonConvert.SerializeObject(result) });
         }
 
         public IActionResult GetAccountTxns()
         {
-            _datah = "yey";
-            var result = Requests.GetAccountTxns().Result;
-            _resultsView = JsonConvert.SerializeObject(result);
-            return RedirectToAction("Index");
+            HttpContext.Session.SetString("SessionData", "true");
+            var result = Requests.GetAccountTxns()?.Result;
+            return RedirectToAction("Index", new { data = JsonConvert.SerializeObject(result) });
         }
 
     }

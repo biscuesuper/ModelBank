@@ -14,15 +14,27 @@
                     <span>1.   Log into your Happy FinTech profile</span><br/>
                     <br/>
                     <span>2.a. Connect new bank account</span><br/>
-                     @if (ViewData["ModelBankUrl"] != null)
+                     @if (Context.Session.TryGetValue("AuthServUrl", out var a))
                     {
                         <span>2.b. Select your bank</span><br/>
                         <span><b>2.c. Consent</b></span><br/>
+                        @*<span style="font-size:16px">
+                        <ul>
+                            <li>The AISP presents to the PSU a description of the data that it requires in order to support its service proposition.</li>
+                            <li>The PSU is then directed to the domain of its ASPSP for authentication and to select the account(s) they want to give access to. </li>
+                            <li>Once the PSU has been authenticated, their ASPSP will be able to respond to the AISP’s request by providing the account information that has been requested.</li>
+                        </ul>*@
+                        @*</span>*@
                     }
                     else{
                         <b>
                         <span>2.b. Select your bank</span><br/>
                         </b>
+                        @*<span style="font-size:16px">
+                        <ul>
+                            <li>PSU selects the ASPSP(s) where their payment account(s) is held. </li>
+                        </ul>
+                        </span>*@
                         <span>2.c. Consent</span><br/>
                     }
                     
@@ -45,27 +57,50 @@
                     <!-- Page -->
                     
 
-                    @if (ViewData["ModelBankUrl"] == null)
+                    @if (!Context.Session.TryGetValue("AuthServUrl", out var b))
                     {   
                         <h3>Select your bank</h3>
+                       
+                        <br/>
                         <div>
                             <a asp-area="" class="btn btn-primary btn-lg" asp-controller="Connect" asp-action="SelectedModelBank">Model Bank</a>
                         </div> 
                         <br />
+
+                         <br/>
+                        
                     }
                     else
                     {
-                        <h3>ModelBank</h3>
-                        <br/>
+                        <h3>Selected: ModelBank</h3>
+                       
+                        <br />
+                        <div style="margin-left:200px; margin-right:200px">
+                            <p>Consent description example:</p>
+                            <p>Connect with ModelBank.</p>
+                            <p>You will need to give your approval for Happy FinTech to access:</p>
+                            <div style="text-align:left; margin-left:250px;">
+                            <ul>
+                                <li>Your account name, number and sort code </li>
+                                <li>Your account balance</li>
+                                <li>Incoming and outgoing transactions</li>
+                            </ul>
+                            </div>
+                        </div>
                         <div>
-                            <a class="btn btn-primary btn-lg" href=@ViewData["ModelBankUrl"] target="_blank">Consent</a>
+                            <a class="btn btn-primary btn-lg" href=@Context.Session.GetString("AuthServUrl") target="_blank">Consent</a>
                         </div>
                         <br />
                         <div>
                             <a asp-area="" class="btn btn-primary btn-lg" asp-controller="Connect" asp-action="LinkAccount">Link Account</a>
                         </div>
+
+                         <br/>
+                           
                
                     }
+
+                    
 
                     <!-- End Page -->
                 </div>

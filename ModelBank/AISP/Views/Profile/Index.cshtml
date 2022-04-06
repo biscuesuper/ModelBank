@@ -11,9 +11,9 @@
                 <span><h1>5 Easy steps for our customers</h1></span><br/>
                 <span>1.   Log into your Happy FinTech profile</span><br/>
                 <br/>
-                @if (ViewData["login"] != null)
+                @if (Context.Session.TryGetValue("IsUserLoggedIn", out var a))
                 {
-                    <span><b>2.a. Connect new bank account</b></span><br/>
+                    <span><b>2.a. Connect new bank account bfkdlanfkidrsja</b></span><br/>
                 }
                 else
                 {
@@ -28,7 +28,7 @@
                 <span>4.a. Go back to Happy FinTech</span><br/>
                 <span>4.b. Test your connection</span><br/>
                 <br/>
-                @if (ViewData["datah"] != null)
+                @if (Context.Session.TryGetValue("DisplayData", out var b) || Context.Session.TryGetValue("HasConsent", out var c))
                 {
                     <span><b>5.   View your bank data on Happy Fintech</b></span><br/>
                 }
@@ -45,7 +45,7 @@
                 <h1 class="display-4">Happy FinTech</h1>
 
                 <!-- Page -->
-                <h1>Hello, @ViewData["Name"]!</h1>
+                <h1>Hello, @Context.Session.GetString("Username")!</h1>
                     
                 <br />
                 <br />
@@ -57,7 +57,7 @@
                                  <div class="text-center"><a asp-area="" class="btn btn-primary btn-lg" style="width:100%" asp-controller="Connect" asp-action="Index">Connect new account</a></div>
                                 <br/>
                                 
-                                @if (ViewData["login"] == null)
+                                @if (!Context.Session.TryGetValue("IsUserLoggedIn", out var d))
                                 {
                                     <div class="text-center"><a asp-area="" class="btn btn-primary btn-lg" style="width:100%" asp-controller="Profile" asp-action="GetAccount">Get Account</a></div>
                                     <br/>
@@ -70,8 +70,9 @@
                             <div class="col-9 text-left">
                                 <figure class="md-5">
                                     <blockquote class="blockquote" style="font-family: Arial, sans-serif; font-size:1em;">
-                                        <div id="ResultsView" class="bg-dark text-light" style="text-align:left">
-                                            @Html.Raw(ViewBag.JsonData)
+                                        <div id="ResultsView" class="bg-dark text-light" style="text-align:left; min-height:40em">
+                                            <p>Your data:</p>
+                                            @Html.Raw(ViewBag.Data)
                                         </div>
                                     </blockquote>
                                 </figure>
