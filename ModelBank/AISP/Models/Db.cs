@@ -9,7 +9,7 @@ namespace AISP.Models
     {
         
 
-        private static SqlConnection con = new SqlConnection("Server=model-bank-sql.database.windows.net;Database=AISP;User Id=admin-sa;Password=SQL-pass;");
+        private static SqlConnection con = new SqlConnection("Server=localhost;Database=AISP;Trusted_Connection=True");
 
         public static Login LoginCheck(Login ad)
         {
